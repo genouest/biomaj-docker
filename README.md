@@ -10,3 +10,8 @@ Run biomaj commands
 
 For data persistency, mount /var/lib/biomaj in container.
 For custom configuration, mount your own global.properties in /etc/biomaj/global.properties
+
+By default, elasticsearch and mail are disabled in configuration. Persistency is
+managed in mongodb database and /var/lib/biomaj. The rest of the container can
+be safely removed after usage.
+
