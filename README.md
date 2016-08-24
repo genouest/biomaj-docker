@@ -6,7 +6,7 @@ Run mongodb instance
 
 Run biomaj commands
 
-    docker run --rm -v local_path:/var/lib/biomaj --link biomaj-mongodb:biomaj-mongodb --help
+    docker run --rm -v local_path:/var/lib/biomaj --link biomaj-mongodb:biomaj-mongodb osallou/biomaj-docker --help
 
 For data persistency, mount /var/lib/biomaj in container.
 For custom configuration, mount your own global.properties in /etc/biomaj/global.properties
