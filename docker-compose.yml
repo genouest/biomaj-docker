@@ -113,7 +113,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["python3", "/root/biomaj-download/bin/biomaj_download_consumer.py"]
+        command: bash -c "sleep 10 ; python3 /root/biomaj-download/bin/biomaj_download_consumer.py"
 
     biomaj-process-web:
         image: osallou/biomaj-test
@@ -148,7 +148,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["python3", "/root/biomaj-process/bin/biomaj_process_consumer.py"]
+        command: bash -c "sleep 10 ; python3 /root/biomaj-process/bin/biomaj_process_consumer.py"
 
     biomaj-daemon-web:
         image: osallou/biomaj-test
@@ -188,7 +188,7 @@
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web
-        command: ["python3", "/root/biomaj-daemon/bin/biomaj_daemon_consumer.py"]
+        command: bash -c "sleep 10 ; python3 /root/biomaj-daemon/bin/biomaj_daemon_consumer.py"
 
     biomaj-watcher-web:
         image: osallou/biomaj-test
