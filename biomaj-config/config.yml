@@ -8,7 +8,7 @@ ldap:
     dn: null
 
 biomaj:
-    config: '/var/lib/biomaj/global.properties'
+    config: '/etc/biomaj/global.properties'
 
 redis:
     host: 'biomaj-redis'

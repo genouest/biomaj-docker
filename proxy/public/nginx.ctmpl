@@ -37,8 +37,49 @@ server {
         proxy_set_header        X-Real-IP       $remote_addr;
         proxy_set_header        Host            $host;
         proxy_redirect          off;
-    } 
+    }
 
+    location /user {
+        proxy_pass http://mywatcher/user;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
+
+    location /bank {
+        proxy_pass http://mywatcher/bank;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
+
+    location /stat {
+        proxy_pass http://mywatcher/stat;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
+
+    location /auth {
+        proxy_pass http://mywatcher/auth;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
+
+    location /logout {
+        proxy_pass http://mywatcher/logout;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
+
+    location /BmajWatcher {
+        proxy_pass http://mywatcher/BmajWatcher;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
 
 }
 }

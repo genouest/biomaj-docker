@@ -5,11 +5,12 @@
         image: mongo
         volumes:
             - ${BIOMAJ_DIR}/mongo:/data/db
+
     biomaj-redis:
         image: redis
         volumes:
             - ${BIOMAJ_DIR}/redis:/data
-    # To check remote access with biomaj user
+
     biomaj-rabbitmq:
         image: rabbitmq
         hostname: biomaj-rabbitmq
@@ -28,6 +29,18 @@
             - "8600:53"
         command: ["-server", "-bootstrap", "-ui-dir", "/ui"]
 
+    biomaj-prometheus:
+        image: prom/prometheus
+        ports:
+            - "9090:9090"
+        volumes:
+            - ${BIOMAJ_DIR}/biomaj-config/prometheus.yml:/etc/prometheus/prometheus.yml
+        depends_on:
+            - biomaj-consul
+        command:
+            - '-storage.local.retention=720h'
+            - '-config.file=/etc/prometheus/prometheus.yml'
+
     biomaj-internal-proxy:
         image: osallou/biomaj-proxy
         # To be deleted in production
@@ -40,7 +53,7 @@
             - biomaj-consul
 
     biomaj-public-proxy:
-        image: osallou/biomaj-proxy        
+        image: osallou/biomaj-proxy
         volumes:
             - ${BIOMAJ_DIR}/proxy/public:/proxy:ro
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
@@ -55,7 +68,7 @@
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajuser
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -65,7 +78,7 @@
             - biomaj-rabbitmq
             - biomaj-redis
         command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_user.wsgi:app"]
-    
+
 
     biomaj-download-web:
         image: osallou/biomaj-test
@@ -73,7 +86,7 @@
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdownload
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -82,16 +95,16 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_download.biomaj_download_web:app"]        
-        
-        
+        command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_download.biomaj_download_web:app"]
+
+
     biomaj-download-message:
         image: osallou/biomaj-test
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdownload
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -100,7 +113,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["python3", "/root/biomaj-download/bin/biomaj_download_consumer.py"] 
+        command: ["python3", "/root/biomaj-download/bin/biomaj_download_consumer.py"]
 
     biomaj-process-web:
         image: osallou/biomaj-test
@@ -108,7 +121,7 @@
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajprocess
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -126,7 +139,7 @@
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajprocess
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -136,14 +149,14 @@
             - biomaj-rabbitmq
             - biomaj-redis
         command: ["python3", "/root/biomaj-process/bin/biomaj_process_consumer.py"]
-   
+
     biomaj-daemon-web:
         image: osallou/biomaj-test
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdaemon
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -163,7 +176,7 @@
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
-            - BIOMAJ_CONFIG=/root/config.yml
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdaemon
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -177,3 +190,17 @@
             - biomaj-process-web
         command: ["python3", "/root/biomaj-daemon/bin/biomaj_daemon_consumer.py"]
 
+    biomaj-watcher-web:
+        image: osallou/biomaj-test
+        volumes:
+            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+        environment:
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+        depends_on:
+            - biomaj-mongo
+            - biomaj-consul
+            - biomaj-rabbitmq
+            - biomaj-redis
+            - biomaj-user-web
+            - biomaj-daemon-web
+        command: ["/root/watcher.sh"]
