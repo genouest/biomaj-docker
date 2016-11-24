@@ -34,6 +34,9 @@ Execute a base image
     Creating biomajdocker_biomaj-daemon-web_1
     Creating biomajdocker_biomaj-watcher-web_1
 
+To enable tracing, you need to launch zipkin server:
+
+    sudo docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
 
 List containers
 
@@ -66,6 +69,11 @@ To create a user, simply connect to biomaj-user container:
 
 Use biomaj-daemon-cli executable from biomaj-cli package to execute update/removal against remote biomaj instance.
 Proxy is biomaj-public-proxy, listening on port 5000 (using default docker-compose configuration)
+
+Example:
+
+    biomaj-daemon-cli.py --proxy http://biomaj-public-proxy --api-key XYZ --update --bank Anopheles_gambiae
+
 
 # watcher
 
