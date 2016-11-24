@@ -2,6 +2,9 @@
 
 Execute docker-compose to launch all services
 
+# Config
+
+Container contains a default configuration. If you expect to override it, simply update files in biomaj-config directory and add volume to /etc/biomaj in container
 
 
 # Debug
