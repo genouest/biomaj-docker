@@ -11,6 +11,9 @@
         volumes:
             - ${BIOMAJ_DIR}/redis:/data
 
+    biomaj-elasticsearch:
+        image: elasticsearch
+
     biomaj-rabbitmq:
         image: rabbitmq
         hostname: biomaj-rabbitmq
@@ -185,6 +188,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
+            - biomaj-elasticsearch
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web

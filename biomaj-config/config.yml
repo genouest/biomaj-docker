@@ -2,6 +2,9 @@ mongo:
     url: 'mongodb://biomaj-mongo:27017'
     db: 'microbiomaj'
 
+zipkin:
+    url: 'http://biomaj-zipkin:9411'
+
 ldap:
     host: null
     port: 389

@@ -9,10 +9,15 @@ RUN apt-get install -y curl libcurl4-openssl-dev gcc python3-pycurl python3-dev 
 RUN git clone -b develop https://github.com/genouest/biomaj-core.git
 RUN pip3 install setuptools --upgrade
 RUN cd biomaj-core && python3 setup.py install
+
+RUN git clone https://github.com/genouest/biomaj-zipkin.git
+RUN cd  biomaj-zipkin && python3 setup.py install
+
 RUN git clone https://github.com/genouest/biomaj-user.git
 RUN cd biomaj-user && python3 setup.py install
 
 RUN git clone https://github.com/genouest/biomaj-process.git
+RUN cd biomaj-process/biomaj_process/message && protoc --python_out=. message.proto
 RUN cd biomaj-process && python3 setup.py install
 
 RUN git clone https://github.com/genouest/biomaj-download.git
