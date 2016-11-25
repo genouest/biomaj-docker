@@ -16,6 +16,9 @@ RUN cd  biomaj-zipkin && python3 setup.py install
 RUN git clone https://github.com/genouest/biomaj-user.git
 RUN cd biomaj-user && python3 setup.py install
 
+RUN git clone https://github.com/genouest/biomaj-cli.git
+RUN cd biomaj-cli && python3 setup.py install
+
 RUN git clone https://github.com/genouest/biomaj-process.git
 RUN cd biomaj-process/biomaj_process/message && protoc --python_out=. message.proto
 RUN cd biomaj-process && python3 setup.py install
