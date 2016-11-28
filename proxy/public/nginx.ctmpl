@@ -17,6 +17,12 @@ upstream mywatcher {
 
 server {
 
+    location /status {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+        include /etc/nginx/mime.types;
+    }
+
     location /api/daemon {
         proxy_pass http://mydaemon/api/daemon;
         proxy_set_header        X-Real-IP       $remote_addr;
