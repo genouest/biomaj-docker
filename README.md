@@ -79,12 +79,12 @@ To create a user, simply connect to biomaj-user container:
 
 # Use it
 
-Use biomaj-daemon-cli executable from biomaj-cli package to execute update/removal against remote biomaj instance.
+Use biomaj-cli executable from biomaj-cli package to execute update/removal against remote biomaj instance.
 Proxy is biomaj-public-proxy, listening on port 5000 (using default docker-compose configuration)
 
 Example:
 
-    biomaj-daemon-cli.py --proxy http://biomaj-public-proxy --api-key XYZ --update --bank Anopheles_gambiae
+    biomaj-cli.py --proxy http://biomaj-public-proxy --api-key XYZ --update --bank Anopheles_gambiae
 
 
 # watcher
