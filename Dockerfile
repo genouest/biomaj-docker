@@ -27,13 +27,13 @@ RUN git clone https://github.com/genouest/biomaj-download.git
 RUN cd biomaj-download/biomaj_download/message && protoc --python_out=. message.proto
 RUN cd biomaj-download && python3 setup.py install
 
-RUN git clone -b feature_microservice https://github.com/genouest/biomaj.git && echo "Install biomaj"
+RUN git clone -b develop https://github.com/genouest/biomaj.git && echo "Install biomaj"
 RUN cd biomaj && python3 setup.py install
 
 RUN git clone https://github.com/genouest/biomaj-daemon.git && echo "Install daemon"
 RUN cd biomaj-daemon && python3 setup.py install
 
-RUN git clone -b feature_microservice https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
+RUN git clone -b develop https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
 RUN cd biomaj-watcher && python3 setup.py develop
 
 
