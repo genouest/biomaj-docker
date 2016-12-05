@@ -208,3 +208,12 @@
             - biomaj-user-web
             - biomaj-daemon-web
         command: ["/root/watcher.sh"]
+
+    biomaj-cron:
+        image: osallou/biomaj-cron
+        volumes:
+            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+        environment:
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+        depends_on:
+            - biomaj-daemon-web

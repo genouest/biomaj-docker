@@ -59,6 +59,8 @@ server {
         proxy_redirect          off;
     }
 
+
+
     location /stat {
         proxy_pass http://mywatcher/stat;
         proxy_set_header        X-Real-IP       $remote_addr;
@@ -66,6 +68,12 @@ server {
         proxy_redirect          off;
     }
 
+    location /schedule {
+        proxy_pass http://mywatcher/schedule;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+    }
     location /auth {
         proxy_pass http://mywatcher/auth;
         proxy_set_header        X-Real-IP       $remote_addr;
