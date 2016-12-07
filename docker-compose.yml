@@ -217,3 +217,23 @@
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
         depends_on:
             - biomaj-daemon-web
+            
+    biomaj-ftp-web:
+        image: osallou/biomaj-test
+        volumes:
+            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+        environment:
+            - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - REDIS_PREFIX=biomajftp
+            - RABBITMQ_USER=biomaj
+            - RABBITMQ_PASSWORD=biomaj
+        depends_on:
+            - biomaj-mongo
+            - biomaj-consul
+            - biomaj-rabbitmq
+            - biomaj-redis
+            - biomaj-user-web
+            - biomaj-download-web
+            - biomaj-process-web
+        command: bash -c "sleep 10 ; python3 /root/biomaj-ftp/bin/biomaj_ftp_service.py" 
