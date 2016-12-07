@@ -36,6 +36,8 @@ RUN cd biomaj-daemon && python3 setup.py install
 RUN git clone -b develop https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
 RUN cd biomaj-watcher && python3 setup.py develop
 
+RUN git clone https://github.com/genouest/biomaj-ftp.git
+RUN cd biomaj-ftp && python3 setup.py install
 
 ENV "BIOMAJ_CONFIG=/etc/biomaj/config.yml"
 
