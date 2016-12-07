@@ -41,6 +41,10 @@ tls:
     key: null
     cert: null
 
+ftp:
+    listen: '127.0.0.1'
+    port: 21
+
 log_config:
     'version': 1
     'formatters':

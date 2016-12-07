@@ -80,7 +80,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_user.wsgi:app"]
+        command: ["gunicorn", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini", "biomaj_user.wsgi:app"]
 
 
     biomaj-download-web:
@@ -98,7 +98,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_download.biomaj_download_web:app"]
+        command: ["gunicorn", "-b", "0.0.0.0:5000",  "--log-config", "/etc/biomaj/production.ini", "biomaj_download.biomaj_download_web:app"]
 
 
     biomaj-download-message:
@@ -133,7 +133,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_process.biomaj_process_web:app"]
+        command: ["gunicorn", "-b", "0.0.0.0:5000",  "--log-config", "/etc/biomaj/production.ini", "biomaj_process.biomaj_process_web:app"]
 
 
     biomaj-process-message:
@@ -171,7 +171,7 @@
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web
-        command: ["gunicorn", "-b", "0.0.0.0:5000", "--capture-output", "--error-logfile", "/var/log/biomaj-web.log", "biomaj_daemon.daemon.biomaj_daemon_web:app"]
+        command: ["gunicorn", "-b", "0.0.0.0:5000",  "--log-config", "/etc/biomaj/production.ini", "biomaj_daemon.daemon.biomaj_daemon_web:app"]
 
     biomaj-daemon-message:
         image: osallou/biomaj-test

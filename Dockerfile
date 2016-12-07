@@ -41,7 +41,7 @@ ENV "BIOMAJ_CONFIG=/etc/biomaj/config.yml"
 
 RUN mkdir -p /var/log/biomaj
 
-RUN pip3 install gunicorn
+RUN pip3 install gunicorn graypy
 
 RUN mkdir -p /var/lib/biomaj/data
 
