@@ -90,3 +90,24 @@ Example:
 # watcher
 
 Access to http://biomaj-public-proxy:5000/app/#/
+
+# Logging
+
+Logging is defined in production.ini for web services and config.yml for others. You cna mount biomaj-config to /etc/biomaj to replace default configuration files and change log levels, handlers etc...
+
+With python logging it is easy to setup centralized logging. In both config files, you can add for example the following with a Graylog server:
+
+
+In config.yml, handlers section add:
+
+        'gelf':
+            'class': 'graypy.GELFHandler'
+            'host': 'graylog'
+            'port':  12201
+            'formatter': 'generic'
+            'level': 'INFO'
+
+Do the same in production.ini in INI logging format.
+
+And in biomaj handler , after console and file, add gelf.
+The docker image already has the graypy module installed for easy testing.

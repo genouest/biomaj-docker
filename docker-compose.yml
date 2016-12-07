@@ -12,7 +12,8 @@
             - ${BIOMAJ_DIR}/redis:/data
 
     biomaj-elasticsearch:
-        image: elasticsearch
+        image: "elasticsearch:2"
+        command: "elasticsearch -Des.cluster.name='biomaj'"
 
     biomaj-rabbitmq:
         image: rabbitmq
@@ -232,4 +233,6 @@
             - biomaj-mongo
             - biomaj-consul
             - biomaj-user-web
+        ports:
+            - "2121:21"
         command: bash -c "sleep 10 ; python3 /root/biomaj-ftp/bin/biomaj_ftp_service.py"
