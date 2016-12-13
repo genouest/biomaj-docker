@@ -5,7 +5,9 @@ Execute docker-compose to launch all services.
 you need to create a .env file in docker-composE.yml directory with:
 
     BIOMAJ_DIR=/..path_to.../biomaj-docker
+    BIOMAJ_DATA_DIR=/..path_to_biomaj_root_dir  # Location of logs etc...
     BIOMAJ_USER_PASSWORD=biomaj_user_default_password
+    DOCKER_URL=tcp://x.y.z:2375  # if you wish to execute processes in Docker containers, give the IP of the host where docker is running (or swarm)
 
 By default, subdirectory *biomaj* is mounted as the biomaj data in the container (/var/lib/biomaj). It expects to match the global.properties configuration (sub directories db, conf, process, ...)
 

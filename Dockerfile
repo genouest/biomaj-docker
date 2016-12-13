@@ -6,6 +6,13 @@ ENV "BIOMAJ_CONFIG=/root/config.yml"
 RUN apt-get update
 RUN apt-get install -y curl libcurl4-openssl-dev gcc python3-pycurl python3-dev python3-pip git unzip bzip2 protobuf-compiler
 
+# Install docker to allow docker execution from process-message
+RUN apt-get install -y apt-transport-https ca-certificates gnupg2
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+RUN echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update
+RUN apt-get install -y docker-engine
+
 RUN git clone -b develop https://github.com/genouest/biomaj-core.git
 RUN pip3 install setuptools --upgrade
 RUN cd biomaj-core && python3 setup.py install

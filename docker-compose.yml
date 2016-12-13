@@ -147,6 +147,8 @@
             - REDIS_PREFIX=biomajprocess
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DIR=${BIOMAJ_DATA_DIR}
+            - DOCKER_URL=${DOCKER_URL}
         depends_on:
             - biomaj-mongo
             - biomaj-consul

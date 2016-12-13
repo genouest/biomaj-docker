@@ -13,6 +13,9 @@ ldap:
 biomaj:
     config: '/etc/biomaj/global.properties'
 
+docker:
+    url: 'tcp://127.0.0.1:2375'
+
 redis:
     host: 'biomaj-redis'
     #host: '131.254.17.40'
