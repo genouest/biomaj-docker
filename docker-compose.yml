@@ -25,13 +25,12 @@
             - RABBITMQ_DEFAULT_PASS=biomaj
 
     biomaj-consul:
-        image: progrium/consul
+        image: consul
         hostname: consulnode1
         ports:
             - "8400:8400"
             - "8500:8500"
             - "8600:53"
-        command: ["-server", "-bootstrap", "-ui-dir", "/ui"]
 
     biomaj-prometheus:
         image: prom/prometheus
