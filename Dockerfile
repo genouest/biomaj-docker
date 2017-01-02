@@ -2,6 +2,10 @@ FROM debian:jessie
 
 WORKDIR /root
 ENV "BIOMAJ_CONFIG=/root/config.yml"
+ENV "prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc"
+
+RUN rm -rf /tmp/biomaj-prometheus-multiproc
+RUN mkdir -p /tmp/biomaj-prometheus-multiproc
 
 RUN apt-get update
 RUN apt-get install -y curl libcurl4-openssl-dev python3-pycurl python3-pip git unzip bzip2 ca-certificates --no-install-recommends
@@ -68,4 +72,5 @@ RUN mkdir -p /var/lib/biomaj/data
 COPY biomaj-config/config.yml /etc/biomaj/config.yml
 COPY biomaj-config/global.properties /etc/biomaj/global.properties
 COPY biomaj-config/production.ini /etc/biomaj/production.ini
+COPY biomaj-config/gunicorn_conf.py /etc/biomaj/gunicorn_conf.py
 COPY watcher.sh /root/watcher.sh
