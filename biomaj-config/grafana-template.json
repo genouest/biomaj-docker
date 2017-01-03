@@ -485,7 +485,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Lastest bank size",
+          "title": "Latest bank size",
           "tooltip": {
             "msResolution": false,
             "shared": true,
