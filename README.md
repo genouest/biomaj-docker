@@ -93,6 +93,16 @@ Example:
 
 Access to http://biomaj-public-proxy:5000/app/#/
 
+
+# Influxdb
+
+if Influxdb is used, database must be created first. To do so, connect in a container (any) and create database with curl:
+
+    curl -X POST 'http://biomaj-influxdb:8086/db?u=root&p=root' \
+      -d '{"name": "biomaj"}'
+
+Grafana can be used to visualize statistics.
+
 # Logging
 
 Logging is defined in production.ini for web services and config.yml for others. You cna mount biomaj-config to /etc/biomaj to replace default configuration files and change log levels, handlers etc...

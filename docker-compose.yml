@@ -46,9 +46,6 @@
 
     biomaj-influxdb:
         image: influxdb
-        ports:
-            - "8086:8086"
-            - "8083:8083"
         volumes:
             - ${BIOMAJ_DIR}/influxdb:/var/lib/influxdb
 

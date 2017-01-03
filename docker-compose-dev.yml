@@ -25,3 +25,10 @@
             - graylog-elasticsearch:elasticsearch
         ports:
             - "9000:9000"
+
+    grafana:
+        image: grafana/grafana
+        ports:
+            - "3000:3000"
+        environment:
+            GF_SECURITY_ADMIN_PASSWORD: admin
