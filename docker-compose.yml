@@ -44,6 +44,14 @@
             - '-storage.local.retention=720h'
             - '-config.file=/etc/prometheus/prometheus.yml'
 
+    biomaj-influxdb:
+        image: influxdb
+        ports:
+            - "8086:8086"
+            - "8083:8083"
+        volumes:
+            - ${BIOMAJ_DIR}/influxdb:/var/lib/influxdb
+
     biomaj-internal-proxy:
         image: osallou/biomaj-proxy
         # To be deleted in production
@@ -170,6 +178,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
+            - biomaj-influxdb
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web

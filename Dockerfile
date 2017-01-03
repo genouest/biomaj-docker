@@ -8,10 +8,10 @@ RUN rm -rf /tmp/biomaj-prometheus-multiproc
 RUN mkdir -p /tmp/biomaj-prometheus-multiproc
 
 RUN apt-get update
-RUN apt-get install -y curl libcurl4-openssl-dev python3-pycurl python3-pip git unzip bzip2 ca-certificates --no-install-recommends
+RUN apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-pip git unzip bzip2 ca-certificates --no-install-recommends
 
 # Install docker to allow docker execution from process-message
-RUN buildDeps='apt-transport-https gnupg2' \
+RUN buildDeps='gnupg2' \
     && set -x \
     && apt-get install -y $buildDeps --no-install-recommends \
     && apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
