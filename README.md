@@ -89,6 +89,24 @@ Example:
     biomaj-cli.py --proxy http://biomaj-public-proxy --api-key XYZ --update --bank Anopheles_gambiae
 
 
+# biomaj-process and software
+
+The biomaj image is a Debian based image. It contains no dedicated software but BioMAJ core resources.
+If you need to execute specific software such a blast, diamond, anything... you need to create your own image.
+You can create a new Docker image based on given Dockerfile or update existing one (if Debian based).
+To do so, launch docker-compose images then
+
+    docker exec -it BIOMAj_PROCESS_MESSAGE_CONTAINERID /bin/bash
+    #xyz> apt-get update
+    #xyz> apt-get install some-stuff
+    #xyz> exit
+    docker commit BIOMAj_PROCESS_MESSAGE_CONTAINERID
+    docker tag BIOMAj_PROCESS_MESSAGE_CONTAINERID me/mybiomajcontainer
+    
+ Then update in docker-compose.yml the image name for biomaj-process-message with *me/mybiomajcontainer*
+ 
+ You can stop and restart your containers and docker will use your new image for biomaj process management.
+
 # watcher
 
 Access to http://biomaj-public-proxy:5000/app/#/
