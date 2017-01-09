@@ -85,7 +85,8 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini", "biomaj_user.wsgi:app"]
+            - biomaj-elasticsearch
+        command: bash -c "sleep 10 ; gunicorn -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_user.wsgi:app"
 
 
     biomaj-download-web:
@@ -103,8 +104,8 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000",  "--log-config", "/etc/biomaj/production.ini", "biomaj_download.biomaj_download_web:app"]
-
+            - biomaj-elasticsearch
+        command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_download.biomaj_download_web:app"
 
     biomaj-download-message:
         image: osallou/biomaj-test
@@ -121,6 +122,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
+            - biomaj-elasticsearch
         command: bash -c "sleep 10 ; python3 /root/biomaj-download/bin/biomaj_download_consumer.py"
 
     biomaj-process-web:
@@ -138,8 +140,8 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000",  "--log-config", "/etc/biomaj/production.ini", "biomaj_process.biomaj_process_web:app"]
-
+            - biomaj-elasticsearch
+        command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_process.biomaj_process_web:app"
 
     biomaj-process-message:
         image: osallou/biomaj-test
@@ -158,6 +160,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
+            - biomaj-elasticsearch
         command: bash -c "sleep 10 ; python3 /root/biomaj-process/bin/biomaj_process_consumer.py"
 
     biomaj-daemon-web:
@@ -176,10 +179,11 @@
             - biomaj-rabbitmq
             - biomaj-redis
             - biomaj-influxdb
+            - biomaj-elasticsearch
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web
-        command: ["gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000",  "--log-config", "/etc/biomaj/production.ini", "biomaj_daemon.daemon.biomaj_daemon_web:app"]
+        command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_daemon.daemon.biomaj_daemon_web:app"
 
     biomaj-daemon-message:
         image: osallou/biomaj-test
@@ -215,7 +219,8 @@
             - biomaj-redis
             - biomaj-user-web
             - biomaj-daemon-web
-        command: ["/root/watcher.sh"]
+            - biomaj-elasticsearch
+        command: bash -c "sleep 10 ; /root/watcher.sh"
 
     biomaj-cron:
         image: osallou/biomaj-cron
@@ -240,6 +245,7 @@
             - biomaj-mongo
             - biomaj-consul
             - biomaj-user-web
+            - biomaj-elasticsearch
         ports:
             - "2121:21"
         command: bash -c "sleep 10 ; python3 /root/biomaj-ftp/bin/biomaj_ftp_service.py"
