@@ -2,7 +2,7 @@
 
 Execute docker-compose to launch all services.
 
-you need to create a .env file in docker-composE.yml directory with:
+you need to create a .env file in docker-compose.yml directory with:
 
     BIOMAJ_DIR=/..path_to.../biomaj-docker
     BIOMAJ_DATA_DIR=/..path_to_biomaj_root_dir  # Location of logs etc...
@@ -23,7 +23,6 @@ Container contains a default configuration. If you expect to override it, simply
 Execute a base image
 
     sudo docker run -it --rm --net biomajdocker_default -v /home/osallou/Development/NOSAVE/genouest/biomaj-docker/biomaj:/var/lib/biomaj/data -e "BIOMAJ_CONFIG=/etc/biomaj/config.yml" -e "REDIS_PREFIX=biomajdaemon" -e "RABBITMQ_USER=biomaj" -e "RABBITMQ_PASSWORD=biomaj" osallou/biomaj-test /bin/bash
-
 
 # Usage example
 
@@ -89,6 +88,23 @@ Example:
     biomaj-cli.py --proxy http://biomaj-public-proxy --api-key XYZ --update --bank Anopheles_gambiae
 
 
+# Local testing
+
+For a simple test in a monolithic configuration (one container only)
+
+    docker run --name biomaj-mongo -d mongo
+    docker run -e "BIOMAJ_CONF=/etc/biomaj/global_local.properties" --rm -v local_path:/var/lib/biomaj --link biomaj-mongo:biomaj-mongo osallou/biomaj-docker biomaj-cli.py --help
+    docker run -e "BIOMAJ_CONF=/etc/biomaj/global_local.properties" --rm -v local_path:/var/lib/biomaj --link biomaj-mongo:biomaj-mongo osallou/biomaj-docker biomaj-cli.py --update --bank alu
+    docker run -e "BIOMAJ_CONF=/etc/biomaj/global_local.properties" --rm -v local_path:/var/lib/biomaj --link biomaj-mongo:biomaj-mongo osallou/biomaj-docker biomaj-cli.py --status
+
+Logs are in /var/log/biomaj
+Configuration files (bank properties) in /etc/biomaj/conf.d
+Process scripts should be put in /etc/biomaj/process.d
+Data files are put in /var/lib/biomaj
+Lock files are in /var/run/biomaj
+
+In production, those directories should be bind mounted and shared among all BioMAJ containers.
+
 # biomaj-process and software
 
 The biomaj image is a Debian based image. It contains no dedicated software but BioMAJ core resources.
@@ -102,9 +118,9 @@ To do so, launch docker-compose images then
     #xyz> exit
     docker commit BIOMAj_PROCESS_MESSAGE_CONTAINERID
     docker tag BIOMAj_PROCESS_MESSAGE_CONTAINERID me/mybiomajcontainer
-    
+
  Then update in docker-compose.yml the image name for biomaj-process-message with *me/mybiomajcontainer*
- 
+
  You can stop and restart your containers and docker will use your new image for biomaj process management.
 
 # watcher

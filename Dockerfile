@@ -74,3 +74,12 @@ COPY biomaj-config/global.properties /etc/biomaj/global.properties
 COPY biomaj-config/production.ini /etc/biomaj/production.ini
 COPY biomaj-config/gunicorn_conf.py /etc/biomaj/gunicorn_conf.py
 COPY watcher.sh /root/watcher.sh
+
+# Local test configuration
+RUN mkdir -p /etc/biomaj/conf.d
+RUN mkdir -p /var/log/biomaj
+RUN mkdir -p /etc/biomaj/process.d
+RUN mkdir -p /var/cache/biomaj
+RUN mkdir -p /var/run/biomaj
+COPY test-local/etc/biomaj/global_local.properties /etc/biomaj/global_local.properties
+COPY test-local/etc/biomaj/conf.d/alu.properties /etc/biomaj/conf.d/alu.properties
