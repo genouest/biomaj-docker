@@ -157,3 +157,10 @@ Do the same in production.ini in INI logging format.
 
 And in biomaj handler , after console and file, add gelf.
 The docker image already has the graypy module installed for easy testing.
+
+
+# Components
+
+By default, elasticsearch and mail are disabled in configuration. Persistence is
+managed in mongodb database and /var/lib/biomaj. The rest of the container can
+be safely removed after usage.
