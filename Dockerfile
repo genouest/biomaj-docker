@@ -20,7 +20,7 @@ RUN buildDeps='gnupg2' \
     && apt-get install -y docker-engine \
     && apt-get purge -y --auto-remove $buildDeps
 
-RUN git clone -b develop https://github.com/genouest/biomaj-core.git
+RUN git clone https://github.com/genouest/biomaj-core.git
 RUN pip3 install setuptools --upgrade
 
 RUN git clone https://github.com/genouest/biomaj-zipkin.git
@@ -33,11 +33,11 @@ RUN git clone https://github.com/genouest/biomaj-process.git
 
 RUN git clone https://github.com/genouest/biomaj-download.git
 
-RUN git clone -b develop https://github.com/genouest/biomaj.git && echo "Install biomaj"
+RUN git clone  https://github.com/genouest/biomaj.git && echo "Install biomaj"
 
 RUN git clone https://github.com/genouest/biomaj-daemon.git && echo "Install daemon"
 
-RUN git clone -b develop https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
+RUN git clone https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
 
 RUN git clone https://github.com/genouest/biomaj-ftp.git
 
