@@ -13,6 +13,12 @@ upstream mywatcher {
   {{else}}server 127.0.0.1:65535; # force a 502{{end}}
 }
 
+upstream myrelease {
+  least_conn;
+  {{range service "biomaj-release"}}server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+  {{else}}server 127.0.0.1:65535; # force a 502{{end}}
+}
+
 
 
 server {
@@ -30,6 +36,15 @@ server {
         proxy_redirect          off;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
     }
+
+    location /api/release {
+        proxy_pass http://myrelease/api/release;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        Host            $host;
+        proxy_redirect          off;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
 
     location /api/watcher {
         proxy_pass http://mywatcher/api/watcher;
