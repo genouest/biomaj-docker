@@ -71,7 +71,7 @@
             - biomaj-consul
 
     biomaj-user-web:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -90,7 +90,7 @@
 
 
     biomaj-download-web:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -108,7 +108,7 @@
         command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_download.biomaj_download_web:app"
 
     biomaj-download-message:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -126,7 +126,7 @@
         command: bash -c "sleep 10 ; python3 /root/biomaj-download/bin/biomaj_download_consumer.py"
 
     biomaj-process-web:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -144,7 +144,7 @@
         command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_process.biomaj_process_web:app"
 
     biomaj-process-message:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -164,7 +164,7 @@
         command: bash -c "sleep 10 ; python3 /root/biomaj-process/bin/biomaj_process_consumer.py"
 
     biomaj-daemon-web:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -186,7 +186,7 @@
         command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_daemon.daemon.biomaj_daemon_web:app"
 
     biomaj-daemon-message:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -207,7 +207,7 @@
         command: bash -c "sleep 10 ; python3 /root/biomaj-daemon/bin/biomaj_daemon_consumer.py"
 
     biomaj-watcher-web:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -232,7 +232,7 @@
             - biomaj-daemon-web
 
     biomaj-ftp:
-        image: osallou/biomaj-test
+        image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:

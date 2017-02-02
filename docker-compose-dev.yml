@@ -32,3 +32,16 @@
             - "3000:3000"
         environment:
             GF_SECURITY_ADMIN_PASSWORD: admin
+
+    biomaj-release-web:
+        image: osallou/biomaj-docker
+        volumes:
+            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+        environment:
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - REDIS_PREFIX=biomajrelease
+        depends_on:
+            - biomaj-consul
+            - biomaj-redis
+            - biomaj-daemon-web
+        command: python3 biomaj_release.py
