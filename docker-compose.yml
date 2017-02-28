@@ -263,4 +263,4 @@
             - biomaj-redis
             - biomaj-daemon-web
             - biomaj-daemon-message
-        command: python3 /root/biomaj-release/bin/biomaj_release.py
+        command: bash -c "sleep 10 ; python3 /root/biomaj-release/bin/biomaj_release.py"
