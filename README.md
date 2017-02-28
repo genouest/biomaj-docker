@@ -22,7 +22,7 @@ Container contains a default configuration. If you expect to override it, simply
 
 Execute a base image
 
-    sudo docker run -it --rm --net biomajdocker_default -v /home/osallou/Development/NOSAVE/genouest/biomaj-docker/biomaj:/var/lib/biomaj/data -e "BIOMAJ_CONFIG=/etc/biomaj/config.yml" -e "REDIS_PREFIX=biomajdaemon" -e "RABBITMQ_USER=biomaj" -e "RABBITMQ_PASSWORD=biomaj" osallou/biomaj-test /bin/bash
+    sudo docker run -it --rm --net biomajdocker_default -v /home/osallou/Development/NOSAVE/genouest/biomaj-docker/biomaj:/var/lib/biomaj/data -e "BIOMAJ_CONFIG=/etc/biomaj/config.yml" -e "REDIS_PREFIX=biomajdaemon" -e "RABBITMQ_USER=biomaj" -e "RABBITMQ_PASSWORD=biomaj" osallou/biomaj-docker /bin/bash
 
 # Usage example
 
