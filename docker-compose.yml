@@ -262,4 +262,4 @@
             - biomaj-consul
             - biomaj-redis
             - biomaj-daemon-web
-        command: python3 biomaj_release.py
+        command: python3 /root/biomaj-release/bin/biomaj_release.py
