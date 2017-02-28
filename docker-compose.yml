@@ -249,3 +249,17 @@
         ports:
             - "2121:21"
         command: bash -c "sleep 10 ; python3 /root/biomaj-ftp/bin/biomaj_ftp_service.py"
+
+    biomaj-release-web:
+        image: osallou/biomaj-docker
+        volumes:
+            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+        environment:
+            - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - REDIS_PREFIX=biomajrelease
+            - REDIS_DAEMON_PREFIX=biomajdaemon
+        depends_on:
+            - biomaj-consul
+            - biomaj-redis
+            - biomaj-daemon-web
+        command: python3 biomaj_release.py
