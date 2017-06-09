@@ -74,4 +74,9 @@ log_config:
             'handlers':
                 - 'console'
                 - 'file'
+        'gunicorn':
+            'level': 'WARNING'
+            'handlers':
+                - 'console'
+                - 'file'
     'disable_existing_loggers': False
