@@ -9,6 +9,12 @@ RUN mkdir -p /tmp/biomaj-prometheus-multiproc
 
 RUN apt-get update
 RUN apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools git unzip bzip2 ca-certificates --no-install-recommends
+RUN git clone https://github.com/lh3/bwa.git
+RUN apt-get install --yes build-essential gcc-multilib apt-utils zlib1g-dev wget
+RUN cd bwa && make
+ENV PATH="/root/bwa:${PATH}"
+
+RUN apt-get update
 
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2' \
@@ -34,9 +40,9 @@ RUN git clone https://github.com/genouest/biomaj-process.git
 
 RUN git clone https://github.com/genouest/biomaj-download.git
 
-RUN git clone  https://github.com/genouest/biomaj.git && echo "Install biomaj"
+RUN git clone -b hook_feature https://github.com/genouest/biomaj.git && echo "Install biomaj"
 
-RUN git clone https://github.com/genouest/biomaj-daemon.git && echo "Install daemon"
+RUN git clone -b hook_feature https://github.com/genouest/biomaj-daemon.git && echo "Install daemon"
 
 RUN git clone https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
 
@@ -59,8 +65,8 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && cd /root/biomaj-process && python3 setup.py install \
     && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. message.proto \
     && cd /root/biomaj-download && python3 setup.py install \
-    && cd /root/biomaj && python3 setup.py install \
-    && cd /root/biomaj-daemon && python3 setup.py install \
+    && cd /root/biomaj && python3 setup.py develop \
+    && cd /root/biomaj-daemon && python3 setup.py develop \
     && cd /root/biomaj-watcher && python3 setup.py develop \
     && cd /root/biomaj-ftp && python3 setup.py install \
     && cd /root/biomaj-release && python3 setup.py install \

@@ -47,7 +47,8 @@ tls:
 ftp:
     listen: '0.0.0.0'
     port: 21
-
+    passive_ports_start: 600
+    passive_ports_end: 610
 log_config:
     'version': 1
     'formatters':
