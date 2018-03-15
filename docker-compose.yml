@@ -237,12 +237,14 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - /root/biomaj-ftp/bin:/root/biomaj-ftp/bin
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajftp
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - MASQUERADE_ADDRESS=${MASQUERADE_ADDRESS}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -250,7 +252,7 @@
             - biomaj-elasticsearch
         ports:
             - "2121:21"
-            - " 600-610:600-610"
+            - "600-610:600-610"
         command: bash -c "sleep 10 ; python3 /root/biomaj-ftp/bin/biomaj_ftp_service.py"
 
     biomaj-release-web:
