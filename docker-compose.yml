@@ -241,6 +241,7 @@
             - REDIS_PREFIX=biomajftp
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - MASQUERADE_ADDRESS=${MASQUERADE_ADDRESS}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
