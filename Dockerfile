@@ -1,8 +1,8 @@
 FROM debian:jessie
 
 WORKDIR /root
-ENV "BIOMAJ_CONFIG=/root/config.yml"
-ENV "prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc"
+ENV BIOMAJ_CONFIG=/root/config.yml
+ENV prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc
 
 RUN rm -rf /tmp/biomaj-prometheus-multiproc
 RUN mkdir -p /tmp/biomaj-prometheus-multiproc
@@ -44,7 +44,7 @@ RUN git clone https://github.com/genouest/biomaj-ftp.git
 
 RUN git clone https://github.com/genouest/biomaj-release.git
 
-ENV "BIOMAJ_CONFIG=/etc/biomaj/config.yml"
+ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 

@@ -33,7 +33,7 @@
             - "8600:53"
 
     biomaj-prometheus:
-        image: prom/prometheus
+        image: prom/prometheus:v1.8.2
         ports:
             - "9090:9090"
         volumes:
