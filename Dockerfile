@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
@@ -11,11 +11,11 @@ RUN apt-get update
 RUN apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools git unzip bzip2 ca-certificates --no-install-recommends
 
 # Install docker to allow docker execution from process-message
-RUN buildDeps='gnupg2' \
+RUN buildDeps='gnupg2 dirmngr' \
     && set -x \
     && apt-get install -y $buildDeps --no-install-recommends \
     && apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
-    && echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list \
+    && echo "deb https://apt.dockerproject.org/repo debian-stretch main" > /etc/apt/sources.list.d/docker.list \
     && apt-get update \
     && apt-get install -y docker-engine \
     && apt-get purge -y --auto-remove $buildDeps
@@ -48,6 +48,7 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
+ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && set -x \
     && apt-get install -y $buildDeps --no-install-recommends \
