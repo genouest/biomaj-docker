@@ -70,6 +70,56 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && apt-get purge -y --auto-remove $buildDeps
 
 
+
+RUN apt-get update --fix-missing && \
+    apt-get install -y wget bzip2 ca-certificates curl git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+
+
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda2-4.0.5-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh
+
+RUN TINI_VERSION=`curl https://github.com/krallin/tini/releases/latest | grep -o "/v.*\"" | sed 's:^..\(.*\).$:\1:'` && \
+    curl -L "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini_${TINI_VERSION}.deb" > tini.deb && \
+    dpkg -i tini.deb && \
+    rm tini.deb && \
+apt-get clean
+
+
+RUN mkdir /data /config
+
+# Add user biodocker with password biodocker
+RUN groupadd fuse && \
+    useradd --create-home --shell /bin/bash --user-group --uid 1000 --groups sudo,fuse biodocker && \
+    echo `echo "biodocker\nbiodocker\n" | passwd biodocker` && \
+    chown biodocker:biodocker /data && \
+    chown biodocker:biodocker /config
+
+# give write permissions to conda folder
+RUN chmod 777 -R /opt/conda/
+
+# Change user
+#USER biodocker
+
+ENV PATH=$PATH:/opt/conda/bin
+ENV PATH=$PATH:/home/biodocker/bin
+#ENV HOME=/home/biodocker
+
+RUN mkdir /home/biodocker/bin
+
+RUN conda config --add channels r
+RUN conda config --add channels bioconda
+
+RUN conda upgrade conda
+
+VOLUME ["/data", "/config"]
+
+
+
 RUN pip3 install graypy
 
 RUN mkdir -p /var/lib/biomaj/data
