@@ -18,9 +18,11 @@
     biomaj-rabbitmq:
         image: rabbitmq
         hostname: biomaj-rabbitmq
+        command: rabbitmq-server
+        entrypoint: ""
         volumes:
             - ${BIOMAJ_DIR}/rabbitmq:/var/lib/rabbitmq
-            - ${BIOMAJ_DIR}/biomaj-config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:r
+            - ${BIOMAJ_DIR}/biomaj-config/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
         environment:
             - RABBITMQ_DEFAULT_USER=biomaj
             - RABBITMQ_DEFAULT_PASS=biomaj
