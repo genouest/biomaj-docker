@@ -20,6 +20,7 @@
         hostname: biomaj-rabbitmq
         volumes:
             - ${BIOMAJ_DIR}/rabbitmq:/var/lib/rabbitmq
+            - ${BIOMAJ_DIR}/biomaj-config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:r
         environment:
             - RABBITMQ_DEFAULT_USER=biomaj
             - RABBITMQ_DEFAULT_PASS=biomaj
