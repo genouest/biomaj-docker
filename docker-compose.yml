@@ -129,6 +129,7 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DIR}/biomaj/process:/opt/conda/envs
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
@@ -147,6 +148,7 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DIR}/biomaj/process:/opt/conda/envs
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
