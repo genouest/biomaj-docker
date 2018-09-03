@@ -56,9 +56,9 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && cd /root/biomaj-zipkin && python3 setup.py install \
     && cd /root/biomaj-user && python3 setup.py install \
     && cd /root/biomaj-cli && python3 setup.py install \
-    && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. message.proto \
+    && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
     && cd /root/biomaj-process && python3 setup.py install \
-    && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. message.proto \
+    && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
     && cd /root/biomaj-download && python3 setup.py install \
     && cd /root/biomaj && python3 setup.py install \
     && cd /root/biomaj-daemon && python3 setup.py install \
