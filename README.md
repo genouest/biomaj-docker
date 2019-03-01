@@ -1,3 +1,8 @@
+# Requirements
+
+* biomaj docker image osallou/biomaj-docker tag > massala
+* biomaj-watcher >= 3.1.3
+
 # Running
 
 Execute docker-compose to launch all services.
