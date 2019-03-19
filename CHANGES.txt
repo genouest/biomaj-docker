@@ -1,6 +1,14 @@
+# vindaloo
+
+## v3 - 2019-03-19
+
+* Change default log level
+* update biomaj-cli and biomaj-daemon to get biomaj-data list and import
+
 # massala
 
 ## v0 - 2018-11-22
 
 * Add naming in versions
 * Force pika library version 0.11.2 in biomaj-download and biomaj-process (latest not working)
+

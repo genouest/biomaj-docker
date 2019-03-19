@@ -44,6 +44,8 @@ RUN git clone https://github.com/genouest/biomaj-ftp.git
 
 RUN git clone https://github.com/genouest/biomaj-release.git
 
+RUN git clone https://github.com/genouest/biomaj-data.git
+
 ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
@@ -65,6 +67,7 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && cd /root/biomaj-watcher && python3 setup.py develop \
     && cd /root/biomaj-ftp && python3 setup.py install \
     && cd /root/biomaj-release && python3 setup.py install \
+    && cd /root/biomaj-data && python3 setup.py install \
     && pip3 install gunicorn \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove $buildDeps
