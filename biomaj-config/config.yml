@@ -57,12 +57,12 @@ log_config:
         'console':
             'class': 'logging.StreamHandler'
             'formatter': 'generic'
-            'level': 'DEBUG'
+            'level': 'INFO'
         'file':
             'class': 'logging.FileHandler'
             'filename': '/var/log/biomaj/biomaj.log'
             'formatter': 'generic'
-            'level': 'DEBUG'
+            'level': 'INFO'
 
     'loggers':
         'root':
@@ -70,7 +70,7 @@ log_config:
             'handlers':
                 - 'console'
         'biomaj':
-            'level': 'DEBUG'
+            'level': 'INFO'
             'handlers':
                 - 'console'
                 - 'file'
