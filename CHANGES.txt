@@ -1,5 +1,9 @@
 # vindaloo
 
+## v4 - 2019-03-20
+
+* update biomaj-download (fix to support spaces in remote files)
+
 ## v3 - 2019-03-19
 
 * Change default log level
