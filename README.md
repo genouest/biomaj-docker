@@ -10,13 +10,38 @@ Execute docker-compose to launch all services.
 you need to create a .env file in docker-compose.yml directory with:
 
     BIOMAJ_DIR=/..path_to.../biomaj-docker
-    BIOMAJ_DATA_DIR=/..path_to_biomaj_root_dir  # Location of logs etc...
+    # optional location of data directory (downloaded and processes files)
+    # default is to use global.properties data.dir location
+    BIOMAJ_DATA_DIR=/..path_to_biomaj_data_dir_in_container
+    # location of data directory on host (not container, /db for example)
+    # used for biomaj-process with Docker executor
+    # Ideally BIOMAJ_HOST_DATA_DIR should equal BIOMAJ_DATA_DIR
+    BIOMAJ_HOST_DATA_DIR=/..path_to_biomaj_data_dir_on_host
     BIOMAJ_USER_PASSWORD=biomaj_user_default_password
     DOCKER_URL=tcp://x.y.z:2375  # if you wish to execute processes in Docker containers, give the IP of the host where docker is running (or swarm)
 
 By default, subdirectory *biomaj* is mounted as the biomaj data in the container (/var/lib/biomaj). It expects to match the global.properties configuration (sub directories db, conf, process, ...)
 
 Logs can be found in /var/log/biomaj in containers
+
+To separate biomaj config/logs/... from data (downloaded data), use the docker-compose-otherdb.yml template.
+
+Example .env when biomaj config and data are colocated (conf, log and data in same root directory) using docker-compose.yml
+
+    BIOMAJ_DIR=/opt/biomaj-docker
+
+Example .env when biomaj config and data are separated (docker-compose-otherdb.yml)
+
+    BIOMAJ_DIR=/opt/biomaj-docker
+    # in container, data directory will override global.properties data.dir and
+    # store data in container directory /db
+    BIOMAJ_DATA_DIR=/db
+    # we want data to be saved in local host directory /db
+    BIOMAJ_HOST_DATA_DIR=/db
+
+
+
+
 
 # Config
 

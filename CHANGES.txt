@@ -1,3 +1,12 @@
+# shahikorma
+
+## v1 - 2019-05-03
+
+* update biomaj-process with new docker .env var BIOMAJ_HOST_DATA_DIR
+    Add example docker-compose-otherdb.yml to separate biomaj config directory and biomaj data directory
+* update biomaj/biomaj-download/biomaj-core to support hard links (option in global.properties)
+    if disk support hard links, avoid using file copies when copying data from previous releases or dependent banks
+
 # vindaloo
 
 ## v4 - 2019-03-20

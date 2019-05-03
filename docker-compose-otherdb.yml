@@ -79,12 +79,14 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajuser
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -98,12 +100,14 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdownload
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -116,12 +120,14 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdownload
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -135,12 +141,14 @@
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
             - ${BIOMAJ_DIR}/biomaj/process:/opt/conda/envs
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajprocess
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -154,12 +162,15 @@
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
             - ${BIOMAJ_DIR}/biomaj/process:/opt/conda/envs
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajprocess
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_HOST_DATA_DIR=${BIOMAJ_HOST_DATA_DIR}
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
             - DOCKER_URL=${DOCKER_URL}
         depends_on:
             - biomaj-mongo
@@ -173,12 +184,14 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdaemon
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -195,12 +208,14 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdaemon
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -216,8 +231,10 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -232,8 +249,10 @@
         image: osallou/biomaj-cron
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-daemon-web
 
@@ -241,9 +260,11 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
             - REDIS_PREFIX=biomajftp
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
@@ -261,10 +282,12 @@
         image: osallou/biomaj-docker
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+            - ${BIOMAJ_DATA_DIR}:${BIOMAJ_DATA_DIR}
         environment:
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajrelease
             - REDIS_DAEMON_PREFIX=biomajdaemon
+            - BIOMAJ_DATA_DIR=${BIOMAJ_DATA_DIR}
         depends_on:
             - biomaj-consul
             - biomaj-redis
