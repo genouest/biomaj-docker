@@ -3,6 +3,7 @@
  services:
 
     traefik:
+        # In production, port 8080 should not be open
         image: traefik
         ports:
                 - "8080:8080"
@@ -10,14 +11,14 @@
         volumes:
                 - ${BIOMAJ_DIR}/proxy/traefik/traefik.toml:/etc/traefik/traefik.toml
 
-    traefik-int:
+    biomaj-internal-proxy:
+        # In production, ports should not be open
         image: traefik
         ports:
                 - "8082:8080"
                 - "8083:80"
         volumes:
                 - ${BIOMAJ_DIR}/proxy/traefik/traefik-int.toml:/etc/traefik/traefik.toml
-
 
     biomaj-mongo:
         image: mongo

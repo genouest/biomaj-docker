@@ -40,7 +40,11 @@ Example .env when biomaj config and data are separated (docker-compose-otherdb.y
     BIOMAJ_HOST_DATA_DIR=/db
 
 
+# Proxy
 
+Biomaj uses 2 proxy, a public one to use API (and biomaj-cli), exposing only some of the components, and an other one, for services communication.
+
+*docker-compose-traefik.yml* is an alternative biomaj setup that makes use of Traefik (https://traefik.io/) that makes use of service discovery to automatically route HTTP requests to biomaj micro services. This feature is in **beta** but will be the recommented option in the future. Traefik also provides a visual dashboard to check for requests status.
 
 
 # Config
@@ -177,7 +181,7 @@ With python logging it is easy to setup centralized logging. In both config file
 In config.yml, handlers section add:
 
         'gelf':
-            'class': 'graypy.GELFHandler'
+            'class': 'graypy.GELFUDPHandler'
             'host': 'graylog'
             'port':  12201
             'formatter': 'generic'

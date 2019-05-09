@@ -50,6 +50,8 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
+RUN pip install gevent==1.4.0
+
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && set -x \
