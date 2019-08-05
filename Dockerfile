@@ -82,25 +82,24 @@ RUN apt-get update --fix-missing && \
     rm -rf /var/lib/apt/lists/*
 
 
-#Conda installation
+#Conda installation and give write permissions to conda folder
 RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda2-4.0.5-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh
+    rm ~/miniconda.sh &&  \
+    /opt/conda/bin/conda config --add channels r  && \
+    /opt/conda/bin/conda config --add channels bioconda  && \
+    /opt/conda/bin/conda upgrade -y conda  && \
+    chmod 777 -R /opt/conda/
+    
 
 
 RUN mkdir /data /config
 
-
-# give write permissions to conda folder
-RUN chmod 777 -R /opt/conda/
-
-
 ENV PATH=$PATH:/opt/conda/bin
 
-RUN conda config --add channels r
-RUN conda config --add channels bioconda
-
-RUN conda upgrade conda
+#RUN conda config --add channels r
+#RUN conda config --add channels bioconda
+#RUN conda upgrade -y conda
 
 VOLUME ["/data", "/config"]
 
