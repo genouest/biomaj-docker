@@ -1,0 +1,72 @@
+[log]
+level = "DEBUG"
+
+################################################################
+# API and dashboard configuration
+################################################################
+[api]
+insecure=true
+
+[file]
+
+# rules
+[backends]
+  [backends.backend1]
+    [backends.backend1.servers.daemonweb]
+    url = "http://biomaj-daemon-web:5000"
+    weight = 1
+  [backends.backend2]
+    [backends.backend2.servers.daemonmsg]
+    url = "http://biomaj-daemon-message:5000"
+    weight = 1
+  [backends.backend3]
+    [backends.backend3.servers.downloadweb]
+    url = "http://biomaj-download-web:5000"
+    weight = 1
+  [backends.backend4]
+    [backends.backend4.servers.downloadmsg]
+    url = "http://biomaj-download-message:5000"
+    weight = 1
+  [backends.backend5]
+    [backends.backend5.servers.processweb]
+    url = "http://biomaj-process-web:5000"
+    weight = 1
+  [backends.backend6]
+    [backends.backend6.servers.processmsg]
+    url = "http://biomaj-process-message:5000"
+    weight = 1
+  [backends.backend7]
+    [backends.backend7.servers.releaseweb]
+    url = "http://biomaj-release-web:5000"
+    weight = 1
+  [backends.backend8]
+    [backends.backend8.servers.userweb]
+    url = "http://biomaj-user-web:5000"
+    weight = 1
+
+[frontends]
+  [frontends.frontend1]
+  entrypoints = ["http"]
+  backend = "backend1"
+    [frontends.frontend1.routes.daemon]
+    rule = "PathPrefix:/api/daemon"
+  [frontends.frontend2]
+  entrypoints = ["http"]
+  backend = "backend3"
+    [frontends.frontend2.routes.download]
+    rule = "PathPrefix:/api/download"
+  [frontends.frontend3]
+  entrypoints = ["http"]
+  backend = "backend5"
+    [frontends.frontend3.routes.process]
+    rule = "PathPrefix:/api/process"
+  [frontends.frontend4]
+  entrypoints = ["http"]
+  backend = "backend7"
+    [frontends.frontend4.routes.release]
+    rule = "PathPrefix:/api/release"
+  [frontends.frontend5]
+  entrypoints = ["http"]
+  backend = "backend8"
+    [frontends.frontend5.routes.user]
+    rule = "PathPrefix:/api/user"

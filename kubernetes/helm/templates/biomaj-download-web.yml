@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biomaj-download-web-deployment
+  labels:
+    app: biomaj-download-web
+spec:
+  replicas: {{.Values.downloadInstances}}
+  selector:
+    matchLabels:
+      app: biomaj-download-web
+  template:
+    metadata:
+      name: biomaj-download-web
+      labels:
+          app: biomaj-download-web
+    spec:
+      containers:
+      - name: biomaj-download-web
+        image: osallou/biomaj-docker
+        command: ["gunicorn"]
+        args: ["-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini", "biomaj_download.biomaj_download_web:app"]
+        env:
+          - name: BIOMAJ_CONFIG
+            value: /etc/biomaj/config.yml
+          - name: REDIS_PREFIX
+            value: biomajdownload
+          - name: BIOMAJ_HOSTNAME
+            value: biomaj-download-web
+        volumeMounts:
+          - mountPath: /etc/biomaj/config.yml
+            subPath: config.yml
+            name: biomaj-config
+      volumes:
+        - name: biomaj-config
+          configMap:
+            name: biomaj-config
+            items:
+              - key: config.yml
+                path: config.yml

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: biomaj-banks-pv-claim
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+     requests:
+       storage: {{.Values.banksPvCapacity}}
+  selector:
+    matchLabels:
+      biomaj: banks

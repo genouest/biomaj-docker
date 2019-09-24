@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biomaj-influxdb
+  labels:
+      app: biomaj-influxdb
+spec:
+  containers:
+  - name: biomaj-influxdb
+    image: influxdb

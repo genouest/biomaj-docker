@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biomaj-redis
+  labels:
+      app: biomaj-redis
+spec:
+  containers:
+  - name: biomaj-redis
+    image: redis

@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biomaj-rabbitmq
+  labels:
+      app: biomaj-rabbitmq
+spec:
+  hostname: biomaj-rabbitmq
+  containers:
+  - name: biomaj-rabbitmq
+    image: rabbitmq
+    command: ["rabbitmq-server"]
+    env:
+      - name: RABBITMQ_DEFAULT_USER
+        value: {{.Values.rabbitmqUser}}
+      - name: RABBITMQ_DEFAULT_PASS
+        value: {{.Values.rabbitmqPassword}}
+    volumeMounts:
+      - mountPath: /etc/rabbitmq/rabbitmq.config
+        subPath: rabbitmq.config
+        name: biomaj-rabbitmq-config
+  volumes:
+    - name: biomaj-rabbitmq-config
+      configMap:
+        name: biomaj-rabbitmq-config
+        items:
+          - key: rabbitmq.config
+            path: rabbitmq.config

@@ -1,0 +1,12 @@
+rabbitmqUser: "biomaj"
+rabbitmqPassword: "biomaj"
+
+downloadInstances: 4
+processInstances: 1
+daemonInstances: 1
+userInstances: 1
+
+banksPvCapacity: 1Gi
+banksPvPath: "/mnt/biomaj"
+dbPvCapacity: 1Gi
+dbPvPath: "/mnt/disks/data1"

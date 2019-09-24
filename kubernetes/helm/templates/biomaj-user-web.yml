@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biomaj-user-web-deployment
+  labels:
+    app: biomaj-user-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: biomaj-user-web
+  template:
+    metadata:
+      name: biomaj-user-web
+      labels:
+          app: biomaj-user-web
+    spec:
+      containers:
+      - name: biomaj-user-web
+        image: osallou/biomaj-docker
+        command: ["gunicorn"]
+        args: ["-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini", "biomaj_user.wsgi:app"]
+        env:
+          - name: BIOMAJ_CONFIG
+            value: /etc/biomaj/config.yml
+          - name: REDIS_PREFIX
+            value: biomajuser
+          - name: BIOMAJ_HOSTNAME
+            value: biomaj-user-web
+        volumeMounts:
+          - mountPath: /etc/biomaj/config.yml
+            subPath: config.yml
+            name: biomaj-config
+          - mountPath: /etc/biomaj/global.properties
+            subPath: global.properties
+            name: biomaj-global
+          - mountPath: /var/lib/biomaj/data
+            name: biomaj-banks
+          - mountPath: /db
+            name: biomaj-data
+
+      volumes:
+        - name: biomaj-data
+          persistentVolumeClaim:
+            claimName: biomaj-db-pv-claim
+        - name: biomaj-banks
+          persistentVolumeClaim:
+            claimName: biomaj-banks-pv-claim
+        - name: biomaj-config
+          configMap:
+            name: biomaj-config
+            items:
+              - key: config.yml
+                path: config.yml
+        - name: biomaj-global
+          configMap:
+            name: biomaj-global-properties
+            items:
+              - key: global.properties
+                path: global.properties
+

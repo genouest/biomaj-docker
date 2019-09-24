@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biomaj-traefik
+  labels:
+      app: biomaj-traefik
+spec:
+  containers:
+  - name: biomaj-traefik:v1.7
+    image: traefik
+    volumeMounts:
+      - mountPath: /etc/traefik/traefik.toml
+        subPath: traefik.toml
+        name: biomaj-traefik-config
+  volumes:
+    - name: biomaj-traefik-config
+      configMap:
+        name: biomaj-traefik-config
+        items:
+          - key: traefik.toml
+            path: traefik.toml

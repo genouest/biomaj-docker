@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: biomaj-release-web
+spec:
+  selector:
+    app: biomaj-release-web
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biomaj-process-message-deployment
+  labels:
+    app: biomaj-process-message
+spec:
+  replicas: {{.Values.processInstances}}
+  selector:
+    matchLabels:
+      app: biomaj-process-message
+  template:
+    metadata:
+      name: biomaj-process-message
+      labels:
+          app: biomaj-process-message
+    spec:
+      containers:
+      - name: biomaj-process-message
+        image: osallou/biomaj-docker
+        command: ["python3"]
+        args: ["/root/biomaj-process/bin/biomaj_process_consumer.py"]
+        env:
+          - name: BIOMAJ_CONFIG
+            value: /etc/biomaj/config.yml
+          - name: REDIS_PREFIX
+            value: biomajprocess
+          - name: RABBITMQ_USER
+            value: {{.Values.rabbitmqUser}}
+          - name: RABBITMQ_PASSWORD
+            value: {{.Values.rabbitmqPassword}}
+          - name: DOCKERURL
+            value: ""
+          - name: BIOMAJ_HOSTNAME
+            value: biomaj-process-message
+        volumeMounts:
+          - mountPath: /etc/biomaj/config.yml
+            subPath: config.yml
+            name: biomaj-config
+          - mountPath: /db
+            name: biomaj-data
+          - mountPath: /var/lib/biomaj/data
+            name: biomaj-banks
+      volumes:
+        - name: biomaj-config
+          configMap:
+            name: biomaj-config
+            items:
+              - key: config.yml
+                path: config.yml
+        - name: biomaj-data
+          persistentVolumeClaim:
+            claimName: biomaj-db-pv-claim
+        - name: biomaj-banks
+          persistentVolumeClaim:
+            claimName: biomaj-banks-pv-claim

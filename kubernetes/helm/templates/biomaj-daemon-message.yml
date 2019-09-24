@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biomaj-daemon-message-deployment
+  labels:
+    app: biomaj-daemon-message
+spec:
+  replicas: {{.Values.daemonInstances}}
+  selector:
+    matchLabels:
+      app: biomaj-daemon-message
+  template:
+    metadata:
+      name: biomaj-daemon-message
+      labels:
+          app: biomaj-daemon-message
+    spec:
+      containers:
+      - name: biomaj-daemon-message
+        image: osallou/biomaj-docker
+        command: ["python3"]
+        args: ["/root/biomaj-daemon/bin/biomaj_daemon_consumer.py"]
+        env:
+          - name: BIOMAJ_CONFIG
+            value: /etc/biomaj/config.yml
+          - name: REDIS_PREFIX
+            value: biomajdaemon
+          - name: RABBITMQ_USER
+            value: {{.Values.rabbitmqUser}}
+          - name: RABBITMQ_PASSWORD
+            value: {{.Values.rabbitmqPassword}}
+          - name: BIOMAJ_HOSTNAME
+            value: biomaj-daemon-message
+        volumeMounts:
+          - mountPath: /etc/biomaj/config.yml
+            subPath: config.yml
+            name: biomaj-config
+          - mountPath: /etc/biomaj/global.properties
+            subPath: global.properties
+            name: biomaj-global
+          - mountPath: /var/lib/biomaj/data
+            name: biomaj-banks
+          - mountPath: /db
+            name: biomaj-data
+
+      volumes:
+        - name: biomaj-data
+          persistentVolumeClaim:
+            claimName: biomaj-db-pv-claim
+        - name: biomaj-banks
+          persistentVolumeClaim:
+            claimName: biomaj-banks-pv-claim
+        - name: biomaj-config
+          configMap:
+            name: biomaj-config
+            items:
+              - key: config.yml
+                path: config.yml
+        - name: biomaj-global
+          configMap:
+            name: biomaj-global-properties
+            items:
+              - key: global.properties
+                path: global.properties

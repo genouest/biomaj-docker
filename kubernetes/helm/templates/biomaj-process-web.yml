@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biomaj-process-web-deployment
+  labels:
+    app: biomaj-process-web
+spec:
+  replicas: {{.Values.processInstances}}
+  selector:
+    matchLabels:
+      app: biomaj-process-web
+  template:
+    metadata:
+      name: biomaj-process-web
+      labels:
+          app: biomaj-process-web
+    spec:
+      containers:
+      - name: biomaj-process-web
+        image: osallou/biomaj-docker
+        command: ["gunicorn"]
+        args: ["-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini", "biomaj_process.biomaj_process_web:app"]
+        env:
+          - name: BIOMAJ_CONFIG
+            value: /etc/biomaj/config.yml
+          - name: REDIS_PREFIX
+            value: biomajprocess
+          - name: BIOMAJ_HOSTNAME
+            value: biomaj-process-web
+        volumeMounts:
+          - mountPath: /etc/biomaj/config.yml
+            subPath: config.yml
+            name: biomaj-config
+      volumes:
+        - name: biomaj-config
+          configMap:
+            name: biomaj-config
+            items:
+              - key: config.yml
+                path: config.yml

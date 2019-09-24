@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: biomaj-db-pv-claim
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+     requests:
+       storage: {{.Values.dbPvCapacity}}
+  selector:
+    matchLabels:
+      biomaj: db

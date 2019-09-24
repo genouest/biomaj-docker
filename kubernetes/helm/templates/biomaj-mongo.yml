@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biomaj-mongo
+  labels:
+      app: biomaj-mongo
+spec:
+  containers:
+  - name: biomaj-mongo
+    image: mongo

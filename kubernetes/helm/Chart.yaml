@@ -1,0 +1,20 @@
+apiVersion: v1
+name: biomaj
+version: 3.1.0
+description: biological banks update and transformation
+keywords:
+  - bioinformatics
+home: https://biomaj.genouest.org
+sources:
+  - https://github.com/genouest/biomaj
+  - https://github.com/genouest/biomaj-core
+  - https://github.com/genouest/biomaj-download
+  - https://github.com/genouest/biomaj-process
+  - https://github.com/genouest/biomaj-release
+  - https://github.com/genouest/biomaj-daemon
+maintainers:
+  - name: Olivier Sallou
+    email: olivier.sallou@irisa.fr
+    url: https://github.com/osallou
+engine: gotpl
+icon: https://biomaj.genouest.org/wp-content/uploads/sites/10/2018/08/BioMaj-logo-Blc-e1535118259109.png

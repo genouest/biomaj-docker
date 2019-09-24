@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biomaj-download-message-deployment
+  labels:
+    app: biomaj-download-message
+spec:
+  replicas: {{.Values.downloadInstances}}
+  selector:
+    matchLabels:
+      app: biomaj-download-message
+  template:
+    metadata:
+      name: biomaj-download-message
+      labels:
+          app: biomaj-download-message
+    spec:
+      containers:
+      - name: biomaj-download-message
+        image: osallou/biomaj-docker
+        command: ["python3"]
+        args: ["/root/biomaj-download/bin/biomaj_download_consumer.py"]
+        env:
+          - name: BIOMAJ_CONFIG
+            value: /etc/biomaj/config.yml
+          - name: REDIS_PREFIX
+            value: biomajdownload
+          - name: RABBITMQ_USER
+            value: {{.Values.rabbitmqUser}}
+          - name: RABBITMQ_PASSWORD
+            value: {{.Values.rabbitmqPassword}}
+          - name: BIOMAJ_HOSTNAME
+            value: biomaj-download-message
+        volumeMounts:
+          - mountPath: /etc/biomaj/config.yml
+            subPath: config.yml
+            name: biomaj-config
+          - mountPath: /db
+            name: biomaj-data
+      volumes:
+        - name: biomaj-config
+          configMap:
+            name: biomaj-config
+            items:
+              - key: config.yml
+                path: config.yml
+        - name: biomaj-data
+          persistentVolumeClaim:
+            claimName: biomaj-db-pv-claim
