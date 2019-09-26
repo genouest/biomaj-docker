@@ -123,3 +123,6 @@ RUN mkdir -p /var/cache/biomaj
 RUN mkdir -p /var/run/biomaj
 COPY test-local/etc/biomaj/global_local.properties /etc/biomaj/global_local.properties
 COPY test-local/etc/biomaj/conf.d/alu.properties /etc/biomaj/conf.d/alu.properties
+
+# Plugins
+RUN cd /var/lib/biomaj && git clone https://github.com/genouest/biomaj-plugins.git plugins

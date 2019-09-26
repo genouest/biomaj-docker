@@ -34,6 +34,10 @@
             - "8400:8400"
             - "8500:8500"
             - "8600:53"
+        environment:
+            - INFLUXDB_DB=biomaj
+            - INFLUXDB_USER=biomaj
+            - INFLUXDB_PASSWORD=biomaj
         command: agent -dev -client 0.0.0.0 -log-level info
 
 
