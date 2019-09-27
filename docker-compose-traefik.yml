@@ -7,7 +7,7 @@
         image: traefik
         ports:
                 - "8080:8080"
-                - "8081:80"
+                - "5000:80"
         volumes:
                 - ${BIOMAJ_DIR}/proxy/traefik/traefik.toml:/etc/traefik/traefik.toml
 
@@ -15,8 +15,8 @@
         # In production, ports should not be open
         image: traefik
         ports:
-                - "8082:8080"
-                - "8083:80"
+                #- "8082:8080"
+                - "8081:80"
         volumes:
                 - ${BIOMAJ_DIR}/proxy/traefik/traefik-int.toml:/etc/traefik/traefik.toml
 
@@ -33,6 +33,9 @@
     biomaj-elasticsearch:
         image: "elasticsearch:2"
         command: "elasticsearch -Des.cluster.name='biomaj'"
+        volumes:
+            - ${BIOMAJ_DIR}/elasticsearch:/usr/share/elasticsearch/data
+
 
     biomaj-rabbitmq:
         image: rabbitmq
@@ -76,26 +79,26 @@
         volumes:
             - ${BIOMAJ_DIR}/influxdb:/var/lib/influxdb
 
-    biomaj-internal-proxy:
-        image: osallou/biomaj-proxy
-        # To be deleted in production
-        ports:
-            - "5080:80"
-        volumes:
-            - ${BIOMAJ_DIR}/proxy/internal:/proxy:ro
-            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj
-        depends_on:
-            - biomaj-consul
+    #biomaj-internal-proxy:
+    #    image: osallou/biomaj-proxy
+    #    # To be deleted in production
+    #    ports:
+    #        - "5080:80"
+    #    volumes:
+    #        - ${BIOMAJ_DIR}/proxy/internal:/proxy:ro
+    #        - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj
+    #    depends_on:
+    #        - biomaj-consul
 
-    biomaj-public-proxy:
-        image: osallou/biomaj-proxy
-        volumes:
-            - ${BIOMAJ_DIR}/proxy/public:/proxy:ro
-            - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
-        ports:
-            - "5000:80"
-        depends_on:
-            - biomaj-consul
+    #biomaj-public-proxy:
+    #    image: osallou/biomaj-proxy
+    #    volumes:
+    #        - ${BIOMAJ_DIR}/proxy/public:/proxy:ro
+    #        - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
+    #    ports:
+    #        - "5000:80"
+    #    depends_on:
+    #        - biomaj-consul
 
     biomaj-user-web:
         image: osallou/biomaj-docker
