@@ -20,3 +20,9 @@ Update *-pv-volume.yml to match your persistent volumes then:
 
     helm package biomaj
     helm install biomaj-3.1.0.tar.gz
+
+## TODO
+
+Add volume persistence for influxdb, redis and mongodb
+
+If using existing mongo/redis/influx/rabbit deployments, update global.properties and config.yml to update connection info and do not deploy related deployments/services
