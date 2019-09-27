@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
@@ -7,8 +7,7 @@ ENV prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc
 RUN rm -rf /tmp/biomaj-prometheus-multiproc
 RUN mkdir -p /tmp/biomaj-prometheus-multiproc
 
-RUN apt-get update
-RUN apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools git unzip bzip2 ca-certificates --no-install-recommends
+RUN apt-get update && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates --no-install-recommends
 
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2 dirmngr software-properties-common' \
@@ -17,11 +16,11 @@ RUN buildDeps='gnupg2 dirmngr software-properties-common' \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
-    && apt-get install -y docker-ce \
+    && apt-get install -y docker-ce-cli \
     && apt-get purge -y --auto-remove $buildDeps
 
 RUN git clone https://github.com/genouest/biomaj-core.git
-RUN easy_install3 pip
+#RUN easy_install3 pip
 RUN pip3 install setuptools --upgrade
 
 RUN git clone https://github.com/genouest/biomaj-zipkin.git
@@ -50,7 +49,8 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
-RUN pip install gevent==1.4.0
+RUN pip3 install gevent==1.4.0
+RUN pip3 install graypy
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps='gcc python3-dev protobuf-compiler' \
@@ -71,15 +71,17 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && cd /root/biomaj-release && python3 setup.py install \
     && cd /root/biomaj-data && python3 setup.py install \
     && pip3 install gunicorn \
+    && apt-get install -y wget bzip2 ca-certificates curl git \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove $buildDeps
 
 
 
-RUN apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates curl git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt-get update --fix-missing && \
+#    apt-get install -y wget bzip2 ca-certificates curl git && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
 
 
 #Conda installation and give write permissions to conda folder
@@ -102,10 +104,6 @@ ENV PATH=$PATH:/opt/conda/bin
 #RUN conda upgrade -y conda
 
 VOLUME ["/data", "/config"]
-
-
-
-RUN pip3 install graypy
 
 RUN mkdir -p /var/lib/biomaj/data
 
