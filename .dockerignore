@@ -3,3 +3,4 @@ mongo
 proxy
 rabbitmq
 redis
+influxdb
