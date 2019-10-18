@@ -124,3 +124,6 @@ COPY test-local/etc/biomaj/conf.d/alu.properties /etc/biomaj/conf.d/alu.properti
 
 # Plugins
 RUN cd /var/lib/biomaj && git clone https://github.com/genouest/biomaj-plugins.git plugins
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait /wait
+RUN chmod +x /wait

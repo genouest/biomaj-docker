@@ -127,13 +127,14 @@
             - REDIS_PREFIX=biomajdownload
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - WAIT_HOSTS=biomaj-rabbitmq:5672, biomaj-mongo:27017
         depends_on:
             - biomaj-mongo
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
             - biomaj-elasticsearch
-        command: bash -c "sleep 10 ; python3 /root/biomaj-download/bin/biomaj_download_consumer.py"
+        command: bash -c "/wait && python3 /root/biomaj-download/bin/biomaj_download_consumer.py"
 
     biomaj-process-web:
         image: osallou/biomaj-docker
@@ -166,13 +167,14 @@
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
             - DOCKER_URL=${DOCKER_URL}
+            - WAIT_HOSTS=biomaj-rabbitmq:5672, biomaj-mongo:27017
         depends_on:
             - biomaj-mongo
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
             - biomaj-elasticsearch
-        command: bash -c "sleep 10 ; python3 /root/biomaj-process/bin/biomaj_process_consumer.py"
+        command: bash -c "/wait && python3 /root/biomaj-process/bin/biomaj_process_consumer.py"
 
     biomaj-daemon-web:
         image: osallou/biomaj-docker
