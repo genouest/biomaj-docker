@@ -7,6 +7,7 @@ before_install:
   - echo "BIOMAJ_DIR=$(pwd)" > .env
   - echo "BIOMAJ_DATA_DIR=$(pwd)/biomaj" >> .env
   - mkdir -p biomaj biomaj/conf biomaj/log biomaj/lock biomaj/db biomaj/process biomaj/cache
+  - cp test-local/etc/biomaj/conf.d/alu.properties biomaj/conf/
 
 script:
   - docker run --rm -i hadolint/hadolint < Dockerfile || true
