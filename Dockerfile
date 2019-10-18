@@ -7,7 +7,7 @@ ENV prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc
 RUN rm -rf /tmp/biomaj-prometheus-multiproc
 RUN mkdir -p /tmp/biomaj-prometheus-multiproc
 
-RUN apt-get update && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates --no-install-recommends
+RUN apt-get update && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends
 
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2 dirmngr software-properties-common' \

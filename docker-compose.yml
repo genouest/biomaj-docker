@@ -58,7 +58,7 @@
             - INFLUXDB_USER=biomaj
             - INFLUXDB_PASSWORD=biomaj
 
-    traefik:
+    biomaj-public-proxy:
         # In production, port 8080 should not be open
         image: traefik:1.7
         ports:

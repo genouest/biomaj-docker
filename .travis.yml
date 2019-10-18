@@ -12,3 +12,5 @@ script:
   - docker run --rm -i hadolint/hadolint < Dockerfile || true
   - docker-compose config --q
   - docker-compose up -d
+  - docker-test.sh
+  - docker-compose down
