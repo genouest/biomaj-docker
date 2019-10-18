@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - echo "BIOMAJ_DIR=$(pwd)" > .env
+  - echo "BIOMAJ_DATA_DIR=$(pwd)/biomaj" >> .env
+  - mkdir -p biomaj biomaj/conf biomaj/log biomaj/lock biomaj/db biomaj/process biomaj/cache
+
+script:
+  - docker-compose up -d
