@@ -11,6 +11,7 @@ before_install:
 script:
   - docker run --rm -i hadolint/hadolint < Dockerfile || true
   - docker-compose config --q
+  - docker-compose build
   - docker-compose up -d
   - docker-test.sh
   - docker-compose down
