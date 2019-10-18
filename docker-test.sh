@@ -14,13 +14,14 @@ docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-p
 count=0
 
 while true; do
+    docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank alu 
     sleep 60
     echo "Check alu update status"
     PROD=`docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank alu --json | jq '.bank.production.details[0]'`
     echo "PROD = $PROD"
     if [ "$PROD" == "null" ]; then
         echo "Not updated yet, trying again..."
-	(( count++ ))
+	count=$((count+1))
 	if test $count -eq 5
         then
             echo "Still failing after 5 minutes"
