@@ -25,6 +25,7 @@ while true; do
 	if test $count -eq 5
         then
             echo "Still failing after 5 minutes"
+            docker-compose logs biomaj-daemon-message
 	    exit 1
 	fi
     else
@@ -33,3 +34,4 @@ while true; do
     fi
 done
 docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank alu
+
