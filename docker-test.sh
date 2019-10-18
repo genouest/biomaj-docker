@@ -22,10 +22,12 @@ while true; do
     if [ "$PROD" == "null" ]; then
         echo "Not updated yet, trying again..."
 	count=$((count+1))
-	if test $count -eq 10
+	if test $count -eq 5
         then
-            echo "Still failing after 10 minutes"
+            echo "Still failing after 5 minutes"
             docker-compose logs biomaj-daemon-message
+	    docker-compose logs biomaj-download-web
+	    docker-compose logs biomaj-download-message
 	    exit 1
 	fi
     else
