@@ -9,4 +9,6 @@ before_install:
   - mkdir -p biomaj biomaj/conf biomaj/log biomaj/lock biomaj/db biomaj/process biomaj/cache
 
 script:
+  - docker run --rm -i hadolint/hadolint < Dockerfile || true
+  - docker-compose config --q
   - docker-compose up -d
