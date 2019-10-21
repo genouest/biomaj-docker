@@ -16,5 +16,5 @@ script:
   - docker build -t osallou/biomaj-docker .
   - docker-compose up -d
   - sleep 20
-  - ./docker-test.sh
+  - ./docker-test.sh local
   - docker-compose down

@@ -2,22 +2,23 @@
 
 set -e
 
+BANK=$1
 TS=$(date +%s)
 USER="biomaj$TS"
 
 APIKEY=`docker-compose exec biomaj-user-web biomaj-users.py -A add -E biomaj@fake.fr -U $USER -P biomaj --json | jq -r '.apikey'`
 echo "APIKEY=$APIKEY"
-echo "update local"
+echo "update $BANK"
 
-docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --update --bank local
+docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --update --bank $BANK
 
 count=0
 
 while true; do
-    docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank local
+    docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank $BANK 
     sleep 60
-    echo "Check local update status"
-    PROD=`docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank local --json | jq '.bank.production.details[0]'`
+    echo "Check $BANK update status"
+    PROD=`docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank $BANK --json | jq '.bank.production.details[0]'`
     echo "PROD = $PROD"
     if [ "$PROD" == "null" ]; then
         echo "Not updated yet, trying again..."
@@ -35,5 +36,5 @@ while true; do
         break
     fi
 done
-docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank local
+docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --status --bank $BANK
 
