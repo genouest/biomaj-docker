@@ -15,6 +15,13 @@ spec:
       labels:
           app: biomaj-user-web
     spec:
+      initContainers:
+      - name: init-biomaj
+        image: osallou/biomaj-docker 
+        env:
+          - name: WAIT_HOSTS
+            value: biomaj-consul:8500, biomaj-mongo:27017
+        command: ['/wait']
       containers:
       - name: biomaj-user-web
         image: osallou/biomaj-docker

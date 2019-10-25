@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biomaj-prometheus
+  labels:
+      app: biomaj-prometheus
+spec:
+  containers:
+  - name: biomaj-prometheus
+    image: prom/prometheus:v1.8.2
+    args: ['-storage.local.retention=720h', '-config.file=/etc/prometheus/prometheus.yml']
+
+    volumeMounts:
+      - mountPath: /etc/prometheus/prometheus.yml
+        subPath: prometheus.yml
+        name: biomaj-prometheus
+
+  volumes:
+    - name: biomaj-prometheus
+      configMap:
+        name: biomaj-prometheus
+        items:
+          - key: prometheus.yml
+            path: prometheus.yml

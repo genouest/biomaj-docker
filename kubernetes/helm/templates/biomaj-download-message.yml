@@ -15,6 +15,13 @@ spec:
       labels:
           app: biomaj-download-message
     spec:
+      initContainers:
+      - name: init-biomaj
+        image: osallou/biomaj-docker 
+        env:
+          - name: WAIT_HOSTS
+            value: biomaj-rabbitmq:5672, biomaj-mongo:27017, biomaj-consul:8500
+        command: ['/wait']
       containers:
       - name: biomaj-download-message
         image: osallou/biomaj-docker

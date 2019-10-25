@@ -8,3 +8,10 @@ spec:
   containers:
   - name: biomaj-redis
     image: redis
+    volumeMounts:
+      - mountPath: /data
+        name: biomaj-redis
+  volumes:
+    - name: biomaj-redis
+      persistentVolumeClaim:
+        claimName: biomaj-redis-pv-claim

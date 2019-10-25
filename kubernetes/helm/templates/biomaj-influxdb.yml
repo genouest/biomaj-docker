@@ -8,3 +8,15 @@ spec:
   containers:
   - name: biomaj-influxdb
     image: influxdb
+    env:
+      - INFLUXDB_DB=biomaj
+      - INFLUXDB_USER=biomaj
+      - INFLUXDB_PASSWORD=biomaj
+
+    volumeMounts:
+      - mountPath: /var/lib/influxdb
+        name: biomaj-influxdb
+  volumes:
+    - name: biomaj-influxdb
+      persistentVolumeClaim:
+        claimName: biomaj-influxdb-pv-claim

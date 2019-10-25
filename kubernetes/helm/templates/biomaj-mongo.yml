@@ -8,3 +8,10 @@ spec:
   containers:
   - name: biomaj-mongo
     image: mongo
+    volumeMounts:
+      - mountPath: /data/db
+        name: biomaj-mongodb
+  volumes:
+    - name: biomaj-mongodb
+      persistentVolumeClaim:
+        claimName: biomaj-mongodb-pv-claim
