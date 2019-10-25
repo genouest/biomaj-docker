@@ -88,15 +88,12 @@
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajuser
-            - RABBITMQ_USER=biomaj
-            - RABBITMQ_PASSWORD=biomaj
+            - WAIT_HOSTS=biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
-            - biomaj-rabbitmq
             - biomaj-redis
-            - biomaj-elasticsearch
-        command: bash -c "sleep 10 ; gunicorn -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_user.wsgi:app"
+        command: ["/startup.sh", "gunicorn",  "-b",  "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini biomaj_user.wsgi:app"]
 
 
     biomaj-download-web:
@@ -107,15 +104,12 @@
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajdownload
-            - RABBITMQ_USER=biomaj
-            - RABBITMQ_PASSWORD=biomaj
+            - WAIT_HOSTS=biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
-            - biomaj-rabbitmq
             - biomaj-redis
-            - biomaj-elasticsearch
-        command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_download.biomaj_download_web:app"
+        command: ["/startup.sh", "gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini biomaj_download.biomaj_download_web:app"]
 
     biomaj-download-message:
         image: osallou/biomaj-docker
@@ -127,14 +121,13 @@
             - REDIS_PREFIX=biomajdownload
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
-            - WAIT_HOSTS=biomaj-rabbitmq:5672, biomaj-mongo:27017
+            - WAIT_HOSTS=biomaj-rabbitmq:5672, biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-            - biomaj-elasticsearch
-        command: bash -c "/wait && python3 /root/biomaj-download/bin/biomaj_download_consumer.py"
+        command: ["/startup.sh", "python3", "/root/biomaj-download/bin/biomaj_download_consumer.py"]
 
     biomaj-process-web:
         image: osallou/biomaj-docker
@@ -145,15 +138,12 @@
             - BIOMAJ_USER_PASSWORD=${BIOMAJ_USER_PASSWORD}
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajprocess
-            - RABBITMQ_USER=biomaj
-            - RABBITMQ_PASSWORD=biomaj
+            - WAIT_HOSTS=biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
-            - biomaj-rabbitmq
             - biomaj-redis
-            - biomaj-elasticsearch
-        command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_process.biomaj_process_web:app"
+        command: ["/startup.sh", "gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini biomaj_process.biomaj_process_web:app"]
 
     biomaj-process-message:
         image: osallou/biomaj-docker
@@ -167,14 +157,14 @@
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
             - DOCKER_URL=${DOCKER_URL}
-            - WAIT_HOSTS=biomaj-rabbitmq:5672, biomaj-mongo:27017
+            - WAIT_HOSTS=biomaj-rabbitmq:5672, biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
             - biomaj-elasticsearch
-        command: bash -c "/wait && python3 /root/biomaj-process/bin/biomaj_process_consumer.py"
+        command: ["/startup.sh", "python3", "/root/biomaj-process/bin/biomaj_process_consumer.py"]
 
     biomaj-daemon-web:
         image: osallou/biomaj-docker
@@ -186,6 +176,7 @@
             - REDIS_PREFIX=biomajdaemon
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - WAIT_HOSTS=biomaj-redis:6379, biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -196,7 +187,7 @@
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web
-        command: bash -c "sleep 10 ; gunicorn -c /etc/biomaj/gunicorn_conf.py -b 0.0.0.0:5000 --log-config /etc/biomaj/production.ini biomaj_daemon.daemon.biomaj_daemon_web:app"
+        command: ["/startup.sh", "gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini biomaj_daemon.daemon.biomaj_daemon_web:app"]
 
     biomaj-daemon-message:
         image: osallou/biomaj-docker
@@ -208,6 +199,7 @@
             - REDIS_PREFIX=biomajdaemon
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
+            - WAIT_HOSTS=biomaj-redis:6379, biomaj-mongo:27017, biomaj-consul:8500, biomaj-rabbitmq:5672
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -217,7 +209,7 @@
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web
-        command: bash -c "sleep 10 ; python3 /root/biomaj-daemon/bin/biomaj_daemon_consumer.py"
+        command: ["/startup.sh", "python3", "/root/biomaj-daemon/bin/biomaj_daemon_consumer.py"]
 
     biomaj-watcher-web:
         image: osallou/biomaj-docker
@@ -225,15 +217,14 @@
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
+            - WAIT_HOSTS=biomaj-redis:6379, biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
-            - biomaj-rabbitmq
-            - biomaj-redis
             - biomaj-user-web
             - biomaj-daemon-web
             - biomaj-elasticsearch
-        command: bash -c "sleep 10 ; /root/watcher.sh"
+        command: ["/startup.sh", "/root/watcher.sh"]
 
     biomaj-cron:
         image: osallou/biomaj-cron
@@ -255,6 +246,7 @@
             - RABBITMQ_USER=biomaj
             - RABBITMQ_PASSWORD=biomaj
             - MASQUERADE_ADDRESS=${MASQUERADE_ADDRESS}
+            - WAIT_HOSTS=biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-mongo
             - biomaj-consul
@@ -262,7 +254,7 @@
             - biomaj-elasticsearch
         ports:
             - "2121:21"
-        command: bash -c "sleep 10 ; python3 /root/biomaj-ftp/bin/biomaj_ftp_service.py"
+        command: ["/startup.sh", "python3", "/root/biomaj-ftp/bin/biomaj_ftp_service.py"]
 
     biomaj-release-web:
         image: osallou/biomaj-docker
@@ -272,9 +264,10 @@
             - BIOMAJ_CONFIG=/etc/biomaj/config.yml
             - REDIS_PREFIX=biomajrelease
             - REDIS_DAEMON_PREFIX=biomajdaemon
+            - WAIT_HOSTS=biomaj-redis:6379, biomaj-mongo:27017, biomaj-consul:8500
         depends_on:
             - biomaj-consul
             - biomaj-redis
             - biomaj-daemon-web
             - biomaj-daemon-message
-        command: bash -c "sleep 10 ; python3 /root/biomaj-release/bin/biomaj_release.py"
+        command: ["/startup.sh", "python3", "/root/biomaj-release/bin/biomaj_release.py"]
