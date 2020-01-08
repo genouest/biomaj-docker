@@ -1,5 +1,15 @@
 # shahikorma
 
+## v3 - 2020-01-08
+
+* fixes on biomaj-download
+* add more logging on biomaj
+* various enhancements in biomaj-download with curl options
+
+## v2 - 2019-12-05
+
+* fixes on biomaj
+
 ## v1 - 2019-05-03
 
 * update biomaj-process with new docker .env var BIOMAJ_HOST_DATA_DIR
