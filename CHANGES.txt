@@ -1,5 +1,9 @@
 # shahikorma
 
+## v4 - 2020-07-21
+
+* fixes on biomaj-download
+
 ## v3 - 2020-01-08
 
 * fixes on biomaj-download
