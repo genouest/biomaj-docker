@@ -13,7 +13,7 @@ before_install:
 script:
   - docker run --rm -i hadolint/hadolint < Dockerfile || true
   - docker-compose config --q
-  - docker build -t osallou/biomaj-docker .
+  - docker build -t quay.io/osallou/biomaj .
   - docker-compose up -d
   - sleep 20
   - ./docker-test.sh local
