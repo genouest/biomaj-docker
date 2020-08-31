@@ -227,7 +227,7 @@
         command: ["/startup.sh", "/root/watcher.sh"]
 
     biomaj-cron:
-        image: osallou/biomaj-cron
+        image: quay.io/osallou/biomaj-cron
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
