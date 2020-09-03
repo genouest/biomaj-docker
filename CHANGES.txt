@@ -1,40 +1,46 @@
-# shahikorma
+# Biomaj changes
 
-## v4 - 2020-07-21
+## UNRELEASED
+
+* enhancements in biomaj-download
+
+## shahikorma
+
+### v4 - 2020-07-21
 
 * fixes on biomaj-download
 
-## v3 - 2020-01-08
+### v3 - 2020-01-08
 
 * fixes on biomaj-download
 * add more logging on biomaj
 * various enhancements in biomaj-download with curl options
 
-## v2 - 2019-12-05
+### v2 - 2019-12-05
 
 * fixes on biomaj
 
-## v1 - 2019-05-03
+### v1 - 2019-05-03
 
 * update biomaj-process with new docker .env var BIOMAJ_HOST_DATA_DIR
     Add example docker-compose-otherdb.yml to separate biomaj config directory and biomaj data directory
 * update biomaj/biomaj-download/biomaj-core to support hard links (option in global.properties)
     if disk support hard links, avoid using file copies when copying data from previous releases or dependent banks
 
-# vindaloo
+## vindaloo
 
-## v4 - 2019-03-20
+### v4 - 2019-03-20
 
 * update biomaj-download (fix to support spaces in remote files)
 
-## v3 - 2019-03-19
+### v3 - 2019-03-19
 
 * Change default log level
 * update biomaj-cli and biomaj-daemon to get biomaj-data list and import
 
-# massala
+## massala
 
-## v0 - 2018-11-22
+### v0 - 2018-11-22
 
 * Add naming in versions
 * Force pika library version 0.11.2 in biomaj-download and biomaj-process (latest not working)
