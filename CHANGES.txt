@@ -1,10 +1,11 @@
 # Biomaj changes
 
-## UNRELEASED
+## shahikorma
+
+## v5 - 2020-11-06
 
 * enhancements in biomaj-download
-
-## shahikorma
+* use miniconda for python 3
 
 ### v4 - 2020-07-21
 
