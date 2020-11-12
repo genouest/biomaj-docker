@@ -62,10 +62,11 @@
         # In production, port 8080 should not be open
         image: traefik:1.7
         ports:
-                #- "8080:8080"
-                - "5000:80"
+            # - "8080:8080"
+            - "5000:80"
         volumes:
-                - ${BIOMAJ_DIR}/proxy/traefik/traefik.toml:/etc/traefik/traefik.toml
+            - ${BIOMAJ_DIR}/proxy/traefik/traefik.toml:/etc/traefik/traefik.toml
+            - /var/run/docker.sock:/var/run/docker.sock
         depends_on:
             - biomaj-consul
 
@@ -82,6 +83,8 @@
 
     biomaj-user-web:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -98,6 +101,8 @@
 
     biomaj-download-web:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -113,6 +118,8 @@
 
     biomaj-download-message:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -131,6 +138,8 @@
 
     biomaj-process-web:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
             - ${BIOMAJ_DIR}/biomaj/process:/opt/conda/envs
@@ -147,6 +156,8 @@
 
     biomaj-process-message:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
             - ${BIOMAJ_DIR}/biomaj/process:/opt/conda/envs
@@ -168,6 +179,8 @@
 
     biomaj-daemon-web:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -191,6 +204,8 @@
 
     biomaj-daemon-message:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -213,6 +228,8 @@
 
     biomaj-watcher-web:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -237,6 +254,8 @@
 
     biomaj-ftp:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -258,6 +277,8 @@
 
     biomaj-release-web:
         image: quay.io/osallou/biomaj
+        build:
+            context: .
         volumes:
             - ${BIOMAJ_DIR}/biomaj:/var/lib/biomaj/data
         environment:
@@ -271,3 +292,19 @@
             - biomaj-daemon-web
             - biomaj-daemon-message
         command: ["/startup.sh", "python3", "/root/biomaj-release/bin/biomaj_release.py"]
+
+    biomaj-expose:
+        image: quay.io/osallou/biomaj-expose
+        labels:
+            - traefik.enable=true
+            - traefik.frontend.rule=PathPrefix:/db
+            - traefik.frontend.auth.forward.address=http://biomaj-daemon-web:5000/api/daemon/expose
+            - traefik.frontend.auth.forward.trustForwardHeader=true
+        depends_on:
+            - biomaj-internal-proxy
+        build:
+            context: proxy/nginx
+        volumes:
+            - ${PWD}/proxy/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - ${BIOMAJ_DIR}/biomaj/db:/usr/share/nginx/html/db:ro
+        command: [nginx-debug, '-g', 'daemon off;']

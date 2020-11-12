@@ -2,6 +2,14 @@
 
 ## shahikorma
 
+## v6 - 2020-11-12
+
+* add /db endpoint to access via http to bank directories (listing/download)
+  read-only access and authorization checks. For private banks access with
+  basic authentication (login:apikey)
+  If not willing to allow http access, set expose=false in global.properties,
+  default is to expose public banks
+
 ## v5 - 2020-11-06
 
 * enhancements in biomaj-download
