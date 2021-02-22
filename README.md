@@ -44,7 +44,7 @@ Example .env when biomaj config and data are separated (docker-compose-otherdb.y
 
 Biomaj uses 2 proxy, a public one to use API (and biomaj-cli), exposing only some of the components, and an other one, for services communication.
 
-*docker-compose-traefik.yml* is an alternative biomaj setup that makes use of Traefik (https://traefik.io/) that makes use of service discovery to automatically route HTTP requests to biomaj micro services. This feature is in **beta** but will be the recommented option in the future. Traefik also provides a visual dashboard to check for requests status.
+*docker-compose.yml* is a setup that makes use of Traefik (https://traefik.io/) that makes use of service discovery to automatically route HTTP requests to biomaj micro services. Traefik also provides a visual dashboard to check for requests status (should not be expose on internet)
 
 
 # Config

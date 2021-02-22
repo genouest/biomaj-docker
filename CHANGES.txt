@@ -2,6 +2,14 @@
 
 ## shahikorma
 
+## v8 - 2021-02-22
+
+* Fix download (regexp use case)
+
+## v7 - 2020-11-18
+
+* update watcher for missing /bank endpoint
+
 ## v6 - 2020-11-12
 
 * add /db endpoint to access via http to bank directories (listing/download)
