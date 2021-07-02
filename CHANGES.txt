@@ -2,6 +2,10 @@
 
 ## shahikorma
 
+## v9 - 2021-07-02
+
+* biomaj fix (release detection)
+
 ## v8 - 2021-02-22
 
 * Fix download (regexp use case)
