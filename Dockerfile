@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM quay.io/osallou/debian:buster
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
