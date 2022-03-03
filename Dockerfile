@@ -19,6 +19,8 @@ RUN buildDeps='gnupg2 dirmngr software-properties-common' \
     && apt-get install -y docker-ce-cli \
     && apt-get purge -y --auto-remove $buildDeps
 
+ENV BIOMAJ_RELEASE="shahikorma-v12"
+
 RUN git clone https://github.com/genouest/biomaj-core.git
 #RUN easy_install3 pip
 RUN pip3 install setuptools --upgrade
