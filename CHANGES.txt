@@ -2,7 +2,7 @@
 
 ## shahikorma
 
-## v10 - 2022-03-02
+## v11 - 2022-03-02
 
 * biomaj fixes, update components
 
