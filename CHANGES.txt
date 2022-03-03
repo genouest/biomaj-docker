@@ -2,6 +2,10 @@
 
 ## shahikorma
 
+## v10 - 2022-03-02
+
+* biomaj fixes, update components
+
 ## v9 - 2021-07-02
 
 * biomaj fix (release detection)
