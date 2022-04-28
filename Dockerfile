@@ -53,6 +53,7 @@ RUN mkdir -p /var/log/biomaj
 
 RUN pip3 install gevent==1.4.0
 RUN pip3 install graypy
+RUN pip3 install pymongo==3.12.3
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps='gcc python3-dev protobuf-compiler' \

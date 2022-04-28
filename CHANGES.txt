@@ -2,6 +2,10 @@
 
 ## shahikorma
 
+## v13 - 2022-04-28
+
+* freeze pymongo to 3.12.4 (v4 breaks some stuff)
+
 ## v12 - 2022-03-02
 
 * use biomaj 3.1.20
