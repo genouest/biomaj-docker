@@ -5,6 +5,7 @@
 ## v13 - 2022-04-28
 
 * freeze pymongo to 3.12.4 (v4 breaks some stuff)
+* update biomaj to fix deprecated isalive (no impact in docker)
 
 ## v12 - 2022-03-02
 
