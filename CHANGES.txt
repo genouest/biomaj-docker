@@ -1,5 +1,7 @@
 # Biomaj changes
 
+Notes: requires mongo 3.x
+
 ## shahikorma
 
 ## v13 - 2022-04-28
