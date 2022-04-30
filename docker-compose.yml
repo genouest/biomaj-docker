@@ -2,7 +2,7 @@
 
  services:
     biomaj-mongo:
-      image: mongo:3.2
+        image: mongo:3.2
         volumes:
             - ${BIOMAJ_DIR}/mongo:/data/db
 

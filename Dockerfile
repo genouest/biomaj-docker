@@ -19,7 +19,7 @@ RUN buildDeps='gnupg2 dirmngr software-properties-common' \
     && apt-get install -y docker-ce-cli \
     && apt-get purge -y --auto-remove $buildDeps
 
-ENV BIOMAJ_RELEASE="shahikorma-v12"
+ENV BIOMAJ_RELEASE="shahikorma-v13"
 
 RUN git clone https://github.com/genouest/biomaj-core.git
 #RUN easy_install3 pip
@@ -54,25 +54,28 @@ RUN mkdir -p /var/log/biomaj
 RUN pip3 install gevent==1.4.0
 RUN pip3 install graypy
 RUN pip3 install pymongo==3.12.3
+RUN pip3 install redis==3.5.3
+RUN pip3 install wheel
+RUN pip3 install gunicorn==20.0.4
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && set -x \
     && apt-get install -y $buildDeps --no-install-recommends \
-    && cd /root/biomaj-core && python3 setup.py install \
-    && cd /root/biomaj-zipkin && python3 setup.py install \
-    && cd /root/biomaj-user && python3 setup.py install \
-    && cd /root/biomaj-cli && python3 setup.py install \
+    && cd /root/biomaj-core && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-user && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-cli && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
-    && cd /root/biomaj-process && python3 setup.py install \
+    && cd /root/biomaj-process && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
-    && cd /root/biomaj-download && python3 setup.py install \
-    && cd /root/biomaj && python3 setup.py install \
-    && cd /root/biomaj-daemon && python3 setup.py install \
-    && cd /root/biomaj-watcher && python3 setup.py develop \
-    && cd /root/biomaj-ftp && python3 setup.py install \
-    && cd /root/biomaj-release && python3 setup.py install \
-    && cd /root/biomaj-data && python3 setup.py install \
+    && cd /root/biomaj-download && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-daemon && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-watcher && pip3 install -r requirements.txt && python3 setup.py develop \
+    && cd /root/biomaj-ftp && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-release && python3 setup.py build && pip3 install . \
+    && cd /root/biomaj-data && python3 setup.py build && pip3 install . \
     && pip3 install gunicorn \
     && apt-get install -y wget bzip2 ca-certificates curl git \
     && apt-get clean \
