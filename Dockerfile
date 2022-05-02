@@ -56,7 +56,8 @@ RUN pip3 install graypy
 RUN pip3 install pymongo==3.12.3
 RUN pip3 install redis==3.5.3
 RUN pip3 install wheel
-RUN pip3 install gunicorn==20.0.4
+# RUN pip3 install gunicorn==19.9.0
+RUN pip3 install PyYAML==5.3.1
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps='gcc python3-dev protobuf-compiler' \
@@ -76,7 +77,6 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && cd /root/biomaj-ftp && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-release && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-data && python3 setup.py build && pip3 install . \
-    && pip3 install gunicorn \
     && apt-get install -y wget bzip2 ca-certificates curl git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -88,7 +88,7 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
 #    apt-get install -y wget bzip2 ca-certificates curl git && \
 #    apt-get clean && \
 #    rm -rf /var/lib/apt/lists/*
-
+RUN pip3 uninstall -y gunicorn && pip3 install gunicorn==19.9.0
 
 #Conda installation and give write permissions to conda folder
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
@@ -99,6 +99,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     /opt/conda/bin/conda upgrade -y conda  && \
     chmod 777 -R /opt/conda/
     
+
 
 
 RUN mkdir /data /config
