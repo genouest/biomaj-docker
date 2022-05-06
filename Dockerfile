@@ -51,12 +51,12 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
+RUN pip3 install greenlet==0.4.17
 RUN pip3 install gevent==1.4.0
 RUN pip3 install graypy
 RUN pip3 install pymongo==3.12.3
 RUN pip3 install redis==3.5.3
 RUN pip3 install wheel
-# RUN pip3 install gunicorn==19.9.0
 RUN pip3 install PyYAML==5.3.1
 
 ENV SUDO_FORCE_REMOVE=yes
@@ -73,7 +73,7 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
     && cd /root/biomaj-download && python3 setup.py build && pip3 install . \
     && cd /root/biomaj && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-daemon && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-watcher && pip3 install -r requirements.txt && python3 setup.py develop \
+    && cd /root/biomaj-watcher && pip3 install -r requirements.txt && pip3 install . \
     && cd /root/biomaj-ftp && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-release && python3 setup.py build && pip3 install . \
     && cd /root/biomaj-data && python3 setup.py build && pip3 install . \
@@ -89,6 +89,10 @@ RUN buildDeps='gcc python3-dev protobuf-compiler' \
 #    apt-get clean && \
 #    rm -rf /var/lib/apt/lists/*
 RUN pip3 uninstall -y gunicorn && pip3 install gunicorn==19.9.0
+RUN pip3 uninstall -y greenlet && pip3 install greenlet==0.4.15
+RUN pip3 uninstall -y gevent && pip3 install gevent==1.3.7
+
+
 
 #Conda installation and give write permissions to conda folder
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \

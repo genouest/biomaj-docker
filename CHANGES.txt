@@ -6,6 +6,7 @@ Notes: requires mongo 3.x
 
 ## v13 - 2022-04-28
 
+* freeze gunicorn/gevent/greenlet which need specific version matches
 * freeze pyyaml (need to be upgraded)
 * freeze gunicorn (issues with python 3.7)
 * freeze redis to 3.5.3, latest breaks stuff on debian buster
