@@ -1,4 +1,4 @@
-FROM quay.io/osallou/debian:buster
+FROM debian:buster
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
@@ -102,7 +102,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     /opt/conda/bin/conda config --add channels bioconda  && \
     /opt/conda/bin/conda upgrade -y conda  && \
     chmod 777 -R /opt/conda/
-    
+
 
 
 

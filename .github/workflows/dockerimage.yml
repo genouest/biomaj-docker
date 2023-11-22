@@ -1,19 +1,57 @@
 name: Docker Image CI
 
-on: [push]
+on: ["push", "pull_request"]
 
 jobs:
 
-  build:
- 
+  lint:
     runs-on: ubuntu-latest
- 
     steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
+    - uses: actions/checkout@v4
+    - uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: Dockerfile
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build and test the Docker image
       run: |
-        docker build . --file Dockerfile --tag docker.pkg.github.com/genouest/biomaj-docker/biomaj:$GITHUB_SHA
-        docker login docker.pkg.github.com -u ${{ secrets.GHR_USER }} -p ${{ secrets.GHR_TOKEN }}
-        docker push docker.pkg.github.com/genouest/biomaj-docker/biomaj:$GITHUB_SHA
-        
-        
+        echo "BIOMAJ_DIR=$(pwd)" > .env
+        echo "BIOMAJ_DATA_DIR=$(pwd)/biomaj" >> .env
+        mkdir -p biomaj biomaj/conf biomaj/log biomaj/lock biomaj/db biomaj/process biomaj/cache
+        cp test-local/etc/biomaj/conf.d/alu.properties biomaj/conf/
+        cp test-local/etc/biomaj/conf.d/local.properties biomaj/conf/
+        docker-compose config --q
+        docker build -t quay.io/genouest/biomaj .
+        docker-compose up -d
+        sleep 20
+        ./docker-test.sh local
+        docker-compose down
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.GHR_USER }}
+        password: ${{ secrets.GHR_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: genouest/biomaj-docker
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
