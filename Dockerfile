@@ -9,7 +9,7 @@ RUN rm -rf /tmp/biomaj-prometheus-multiproc && \
 
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2 dirmngr software-properties-common' \
-    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    && echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list \
     && apt-get update \
     && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends \
     && apt-get install -y $buildDeps --no-install-recommends \
@@ -93,10 +93,6 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 RUN mkdir /data /config
 
 ENV PATH=$PATH:/opt/conda/bin
-
-#RUN conda config --add channels r
-#RUN conda config --add channels bioconda
-#RUN conda upgrade -y conda
 
 VOLUME ["/data", "/config"]
 
