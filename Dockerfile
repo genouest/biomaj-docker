@@ -15,12 +15,12 @@ RUN apt-get update \
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2 dirmngr software-properties-common' \
     && set -x \
-    && apt-get install -y "$buildDeps" --no-install-recommends \
+    && apt-get install -y $buildDeps --no-install-recommends \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
     && apt-get install --no-install-recommends -y docker-ce-cli \
-    && apt-get purge -y --auto-remove "$buildDeps" \
+    && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -55,7 +55,7 @@ RUN pip3 install --no-cache-dir setuptools --upgrade && \
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && set -x \
-    && apt-get install -y "$buildDeps" --no-install-recommends \
+    && apt-get install -y $buildDeps --no-install-recommends \
     && cd /root/biomaj-core && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-user && python3 setup.py build && pip3 install --no-cache-dir . \
@@ -71,7 +71,7 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && cd /root/biomaj-release && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-data && python3 setup.py build && pip3 install --no-cache-dir . \
     && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git \
-    && apt-get purge -y --auto-remove "$buildDeps" \
+    && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
