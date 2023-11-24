@@ -28,7 +28,7 @@
             - RABBITMQ_DEFAULT_PASS=biomaj
 
     biomaj-consul:
-        image: consul
+        image: hashicorp/consul:1.17
         hostname: consulnode1
         ports:
             - "8400:8400"
