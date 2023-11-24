@@ -7,7 +7,10 @@ ENV prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc
 RUN rm -rf /tmp/biomaj-prometheus-multiproc && \
     mkdir -p /tmp/biomaj-prometheus-multiproc
 
-RUN apt-get update && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends
+RUN apt-get update \
+    && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2 dirmngr software-properties-common' \
@@ -17,7 +20,9 @@ RUN buildDeps='gnupg2 dirmngr software-properties-common' \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
     && apt-get install --no-install-recommends -y docker-ce-cli \
-    && apt-get purge -y --auto-remove "$buildDeps"
+    && apt-get purge -y --auto-remove "$buildDeps" \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV BIOMAJ_RELEASE="shahikorma-v13"
 
@@ -38,7 +43,7 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
-RUN pip3 install setuptools --upgrade && \
+RUN pip3 install --no-cache-dir setuptools --upgrade && \
     pip3 install --no-cache-dir greenlet==0.4.17 && \
     pip3 install --no-cache-dir gevent==1.4.0 && \
     pip3 install --no-cache-dir graypy && \
@@ -66,9 +71,9 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && cd /root/biomaj-release && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-data && python3 setup.py build && pip3 install --no-cache-dir . \
     && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git \
+    && apt-get purge -y --auto-remove "$buildDeps" \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get purge -y --auto-remove "$buildDeps"
+    && rm -rf /var/lib/apt/lists/*
 
 
 
