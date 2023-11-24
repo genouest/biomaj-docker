@@ -7,18 +7,13 @@ ENV prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc
 RUN rm -rf /tmp/biomaj-prometheus-multiproc && \
     mkdir -p /tmp/biomaj-prometheus-multiproc
 
-RUN apt-get update \
-    && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install docker to allow docker execution from process-message
 RUN buildDeps='gnupg2 dirmngr software-properties-common' \
-    && set -x \
-    && apt-get install -y $buildDeps --no-install-recommends \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
+    && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends \
+    && apt-get install -y $buildDeps --no-install-recommends \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && apt-get install --no-install-recommends -y docker-ce-cli \
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
@@ -55,6 +50,7 @@ RUN pip3 install --no-cache-dir setuptools --upgrade && \
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && set -x \
+    && apt-get update \
     && apt-get install -y $buildDeps --no-install-recommends \
     && cd /root/biomaj-core && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install --no-cache-dir . \
@@ -76,11 +72,6 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && rm -rf /var/lib/apt/lists/*
 
 
-
-#RUN apt-get update --fix-missing && \
-#    apt-get install -y wget bzip2 ca-certificates curl git && \
-#    apt-get clean && \
-#    rm -rf /var/lib/apt/lists/*
 RUN pip3 uninstall -y gunicorn && pip3 install --no-cache-dir gunicorn==19.9.0 && \
     pip3 uninstall -y greenlet && pip3 install --no-cache-dir greenlet==0.4.15 && \
     pip3 uninstall -y gevent && pip3 install --no-cache-dir gevent==1.3.7
