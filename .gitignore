@@ -1,5 +1,7 @@
 .env
 biomaj
+biomaj/conf/alu.properties
+biomaj/conf/local.properties
 !*biomaj/
 mongo
 redis
