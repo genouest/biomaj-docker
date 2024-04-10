@@ -24,7 +24,7 @@ jobs:
         mkdir -p biomaj biomaj/conf biomaj/log biomaj/lock biomaj/db biomaj/process biomaj/cache
         cp test-local/etc/biomaj/conf.d/alu.properties biomaj/conf/
         cp test-local/etc/biomaj/conf.d/local.properties biomaj/conf/
-        docker-compose config --q
+        docker-compose config -q
         docker build -t quay.io/genouest/biomaj .
         docker-compose up -d
         sleep 20
