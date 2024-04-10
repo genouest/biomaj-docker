@@ -25,7 +25,7 @@ jobs:
         cp test-local/etc/biomaj/conf.d/alu.properties biomaj/conf/
         cp test-local/etc/biomaj/conf.d/local.properties biomaj/conf/
         docker-compose config -q
-        docker build -t quay.io/genouest/biomaj .
+        docker-compose build
         docker-compose up -d
         sleep 20
         ./docker-test.sh local
