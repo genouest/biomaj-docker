@@ -24,6 +24,7 @@ jobs:
         mkdir -p biomaj biomaj/conf biomaj/log biomaj/lock biomaj/db biomaj/process biomaj/cache
         cp test-local/etc/biomaj/conf.d/alu.properties biomaj/conf/
         cp test-local/etc/biomaj/conf.d/local.properties biomaj/conf/
+        apt-get update && apt-get install -y jq
     - name: Validate Docker Compose configuration
       run: |
         docker-compose config -q
