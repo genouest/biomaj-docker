@@ -26,20 +26,20 @@ jobs:
         cp test-local/etc/biomaj/conf.d/local.properties biomaj/conf/
     - name: Validate Docker Compose configuration
       run: |
-        docker-compose config -q
+        docker compose config -q
     - name: Build Docker image
       run: |
-        docker-compose build
+        docker compose build -q
     - name: Start Docker containers
       run: |
-        docker-compose up -d
+        docker compose up -d
     - name: Execute test script
       run: |
         sleep 20
         ./docker-test.sh local
     - name: Shut down Docker containers
       run: |
-        docker-compose down
+        docker compose down
 
   publish:
     runs-on: ubuntu-latest
