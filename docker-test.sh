@@ -6,7 +6,7 @@ BANK=$1
 TS=$(date +%s)
 USER="biomaj$TS"
 docker-compose ps
-APIKEY=`docker-compose exec biomaj-user-web biomaj-users.py -A add -E biomaj@fake.fr -U $USER -P biomaj --json | awk -F'"apikey":' '{print $2}' | awk -F'"' '{print $2}'`
+APIKEY=`docker-compose exec biomaj-user-web biomaj-users.py -A add -E biomaj@fake.fr -U $USER -P biomaj --json | jq -r '.apikey'`
 echo "APIKEY=$APIKEY"
 echo "update $BANK"
 
