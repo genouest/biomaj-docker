@@ -15,6 +15,8 @@ RUN buildDeps='gnupg2 dirmngr' \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && apt-get update \
     && apt-get install --no-install-recommends -y docker-ce-cli \
+    && apt-get install --no-install-recommends -y python3-markupsafe \
+    && apt-get install --no-install-recommends -y python3-bcrypt \
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -39,13 +41,13 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 RUN mkdir -p /var/log/biomaj
 
 RUN pip3 install --no-cache-dir setuptools --upgrade && \
-    pip3 install --no-cache-dir greenlet==0.4.17 && \
-    pip3 install --no-cache-dir gevent==1.4.0 && \
-    pip3 install --no-cache-dir graypy && \
-    pip3 install --no-cache-dir pymongo==3.12.3 && \
-    pip3 install --no-cache-dir redis==3.5.3 && \
-    pip3 install --no-cache-dir wheel && \
-    pip3 install --no-cache-dir PyYAML==5.3.1
+pip3 install --no-cache-dir greenlet==0.4.17 && \
+pip3 install --no-cache-dir gevent==1.4.0 && \
+pip3 install --no-cache-dir graypy && \
+pip3 install --no-cache-dir pymongo==3.12.3 && \
+pip3 install --no-cache-dir redis==3.5.3 && \
+pip3 install --no-cache-dir wheel && \
+pip3 install --no-cache-dir PyYAML==5.4.1
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps="gcc python3-dev protobuf-compiler" \
