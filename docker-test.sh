@@ -6,11 +6,11 @@ BANK=$1
 TS=$(date +%s)
 USER="biomaj$TS"
 docker-compose ps
-APIKEY=`docker-compose exec biomaj-user-web biomaj-users.py -A add -E biomaj@fake.fr -U $USER -P biomaj --json | jq -r '.apikey'`
+APIKEY=`docker-compose exec biomaj-user-web python3 /usr/local/bin/biomaj-users.py -A add -E biomaj@fake.fr -U $USER -P biomaj --json | jq -r '.apikey'`
 echo "APIKEY=$APIKEY"
 echo "update $BANK"
 
-docker-compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --update --bank $BANK
+docker-compose exec biomaj-user-web python3 /usr/local/bin/biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --update --bank $BANK
 
 count=0
 
