@@ -28,10 +28,10 @@ while true; do
 	if test $count -eq 5
         then
             echo "Still failing after 5 minutes"
-            #docker compose logs biomaj-daemon-message
-	        #docker compose logs biomaj-download-web
-	        #docker compose logs biomaj-download-message
-	        exit 1
+            docker compose logs biomaj-daemon-message
+	    docker compose logs biomaj-download-web
+	    docker compose logs biomaj-download-message
+	    exit 1
 	fi
     else
         echo "Success"

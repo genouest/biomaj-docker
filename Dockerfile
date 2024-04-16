@@ -45,7 +45,8 @@ pip3 install --no-cache-dir graypy && \
 pip3 install --no-cache-dir pymongo==3.12.3 && \
 pip3 install --no-cache-dir redis==3.5.3 && \
 pip3 install --no-cache-dir wheel && \
-pip3 install --no-cache-dir PyYAML==5.4.1
+pip3 install --no-cache-dir PyYAML==5.4.1 && \
+python3 -m pip install ftputil
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps="gcc python3-dev protobuf-compiler" \
