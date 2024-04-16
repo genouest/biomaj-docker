@@ -10,7 +10,9 @@ APIKEY=`docker compose exec biomaj-user-web python3 /usr/local/bin/biomaj-users.
 echo "APIKEY=$APIKEY"
 echo "update $BANK"
 
+echo "biomaj-cli begin"
 docker compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --update --bank $BANK
+echo "biomaj-cli end"
 
 count=0
 
@@ -26,10 +28,10 @@ while true; do
 	if test $count -eq 5
         then
             echo "Still failing after 5 minutes"
-            docker compose logs biomaj-daemon-message
-	    docker compose logs biomaj-download-web
-	    docker compose logs biomaj-download-message
-	    exit 1
+            #docker compose logs biomaj-daemon-message
+	        #docker compose logs biomaj-download-web
+	        #docker compose logs biomaj-download-message
+	        exit 1
 	fi
     else
         echo "Success"

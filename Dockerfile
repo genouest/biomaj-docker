@@ -15,8 +15,6 @@ RUN buildDeps='gnupg2 dirmngr' \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && apt-get update \
     && apt-get install --no-install-recommends -y docker-ce-cli \
-    && apt-get install --no-install-recommends -y python3-markupsafe \
-    && apt-get install --no-install-recommends -y python3-bcrypt \
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -68,7 +66,7 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && cd /root/biomaj-ftp && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-release && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-data && python3 setup.py build && pip3 install --no-cache-dir . \
-    && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git \
+    && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git nano python3-markupsafe python3-bcrypt \
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
