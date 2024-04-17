@@ -29,12 +29,13 @@ jobs:
         docker compose config -q
     - name: Build Docker image
       run: |
-        docker compose build -q --no-cache
+        docker compose build --no-cache
     - name: Start Docker containers
       run: |
         docker compose up -d
     - name: Execute test script
       run: |
+        sleep 20
         ./docker-test.sh local
     - name: Shut down Docker containers
       run: |
