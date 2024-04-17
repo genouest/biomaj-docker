@@ -10,9 +10,7 @@ APIKEY=`docker compose exec biomaj-user-web python3 /usr/local/bin/biomaj-users.
 echo "APIKEY=$APIKEY"
 echo "update $BANK"
 
-echo "biomaj-cli begin"
 docker compose exec biomaj-user-web biomaj-cli.py --proxy http://biomaj-public-proxy --api-key $APIKEY --update --bank $BANK
-echo "biomaj-cli end"
 
 count=0
 

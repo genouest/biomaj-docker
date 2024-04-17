@@ -1,0 +1,62 @@
+2024-04-17 07:30:20,958 INFO  [root][MainThread] Log file: /var/lib/biomaj/data/log/local/1713339020.9425752/local.log
+2024-04-17 07:30:21,151 WARNI [root][MainThread] Bank:local:Update
+2024-04-17 07:30:21,156 INFO  [root][MainThread] Bank:local:Release:latest
+2024-04-17 07:30:21,167 INFO  [root][MainThread] Workflow:Start
+2024-04-17 07:30:21,168 INFO  [root][MainThread] Workflow:Start:init
+2024-04-17 07:30:21,169 INFO  [root][MainThread] Workflow:wf_init
+2024-04-17 07:30:21,183 INFO  [root][MainThread] Workflow:Start:check
+2024-04-17 07:30:21,184 INFO  [root][MainThread] Workflow:wf_check
+2024-04-17 07:30:21,185 INFO  [root][MainThread] Workflow:Start:depends
+2024-04-17 07:30:21,185 INFO  [root][MainThread] Workflow:wf_depends
+2024-04-17 07:30:21,185 INFO  [root][MainThread] Workflow:wf_depends:True
+2024-04-17 07:30:21,186 INFO  [root][MainThread] Workflow:Start:preprocess
+2024-04-17 07:30:21,186 INFO  [root][MainThread] Workflow:wf_preprocess
+2024-04-17 07:30:21,189 INFO  [root][MainThread] PROC:PRE
+2024-04-17 07:30:21,199 INFO  [root][MainThread] Workflow:Start:release
+2024-04-17 07:30:21,200 INFO  [root][MainThread] Workflow:wf_release
+2024-04-17 07:30:21,200 INFO  [root][MainThread] Workflow:wf_release:previous_session:None
+2024-04-17 07:30:21,202 INFO  [root][MainThread] Workflow:Start:download
+2024-04-17 07:30:21,202 INFO  [root][MainThread] Workflow:wf_download
+2024-04-17 07:30:21,389 INFO  [root][MainThread] Use remote: True
+2024-04-17 07:30:21,563 INFO  [root][MainThread] Workflow:wf_download:DownloadSession:9f910bf2-1fb1-4c51-8359-07530845955e
+2024-04-17 07:30:21,588 INFO  [root][MainThread] Workflow:DownloadService:CleanSession
+2024-04-17 07:30:21,629 INFO  [root][MainThread] Workflow:wf_download:nb_files_to_download:2
+2024-04-17 07:30:21,631 INFO  [root][MainThread] Workflow:wf_download:release:remoterelease:2024-4-9
+2024-04-17 07:30:21,631 INFO  [root][MainThread] Workflow:wf_download:release:release:2024-4-9
+2024-04-17 07:30:21,635 INFO  [root][MainThread] Workflow:wf_download:nb_expected_files:2
+2024-04-17 07:30:21,635 INFO  [root][MainThread] Workflow:wf_download:nb_files_in_offline_dir:0
+2024-04-17 07:30:21,642 INFO  [root][MainThread] Use remote: True
+2024-04-17 07:30:21,642 INFO  [root][MainThread] Set rate limiting: 1
+2024-04-17 07:30:21,650 INFO  [root][MainThread] Workflow:wf_download:DownloadSession:18d9e52c-a500-41a7-9f59-8010f88e22c0
+2024-04-17 07:30:21,675 INFO  [root][MainThread] Workflow:wf_download:Download:Waiting
+2024-04-17 07:30:21,675 INFO  [root][MainThread] Workflow:wf_download:RemoteDownload:Waiting
+2024-04-17 07:30:41,635 INFO  [root][MainThread] Workflow:wf_download:RemoteDownload:Completed:2
+2024-04-17 07:30:41,635 INFO  [root][MainThread] Workflow:wf_download:RemoteDownload:Errors:-1
+2024-04-17 07:30:41,635 INFO  [root][MainThread] Workflow:DownloadService:CleanSession
+2024-04-17 07:30:41,644 INFO  [root][MainThread] Workflow:wf_checksum
+2024-04-17 07:30:41,645 INFO  [root][MainThread] Workflow:wf_uncompress
+2024-04-17 07:30:41,645 INFO  [root][MainThread] Workflow:wf_uncompress:Uncompress:/var/lib/biomaj/data/db/offline/local_tmp/global_local.properties
+2024-04-17 07:30:41,645 INFO  [root][MainThread] Workflow:wf_uncompress:Uncompress:/var/lib/biomaj/data/db/offline/local_tmp/global.properties
+2024-04-17 07:30:41,645 INFO  [root][MainThread] Workflow:wf_copy
+2024-04-17 07:30:41,657 INFO  [root][MainThread] Workflow:wf_copydepends
+2024-04-17 07:30:41,658 INFO  [root][MainThread] Workflow:Start:postprocess
+2024-04-17 07:30:41,658 INFO  [root][MainThread] Workflow:wf_postprocess
+2024-04-17 07:30:41,658 INFO  [root][MainThread] PROC:POST:BLOCK
+2024-04-17 07:30:41,658 INFO  [root][MainThread] PROC:POST:BLOCK:TEST
+2024-04-17 07:30:41,659 INFO  [root][Thread-737] PROC:META:RUN:TEST1
+2024-04-17 07:30:41,662 INFO  [root][Thread-737] PROC:META:RUN:PROCESS:echo
+2024-04-17 07:30:41,663 INFO  [root][Thread-737] PROC:META:RUN:REMOTEPROCESS: echo
+2024-04-17 07:30:41,819 INFO  [root][Thread-737] Process:RemoteProcess:Waiting:TEST1_echo
+2024-04-17 07:30:51,870 INFO  [root][Thread-737] PROC:META:RUN:PROCESS:OK:TEST1_echo
+2024-04-17 07:30:51,873 INFO  [root][MainThread] Workflow:wf_metadata
+2024-04-17 07:30:51,873 INFO  [root][MainThread] Workflow:wf_stats
+2024-04-17 07:30:51,874 INFO  [root][MainThread] Workflow:Start:publish
+2024-04-17 07:30:51,874 INFO  [root][MainThread] Workflow:wf_publish:no
+2024-04-17 07:30:51,875 INFO  [root][MainThread] Workflow:wf_clean_offline
+2024-04-17 07:30:51,876 INFO  [root][MainThread] Workflow:wf_delete_old
+2024-04-17 07:30:51,877 INFO  [root][MainThread] Workflow:wf_clean_old_sessions
+2024-04-17 07:30:51,877 INFO  [root][MainThread] Workflow:Start:over
+2024-04-17 07:30:51,877 INFO  [root][MainThread] Workflow:wf_over
+2024-04-17 07:30:51,917 ERROR [root][MainThread] Cannot load influxdb libraryNo module named 'msgpack'
+2024-04-17 07:30:51,942 INFO  [root][MainThread] Notify:none
+2024-04-17 07:30:51,962 INFO  [root][MainThread] Biomaj:Daemon:local:over
