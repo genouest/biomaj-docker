@@ -1,9 +1,5 @@
 .env
 biomaj
-biomaj/cash/
-biomaj/conf/
-biomaj/log/local/
-!*biomaj/
 mongo
 redis
 rabbitmq
