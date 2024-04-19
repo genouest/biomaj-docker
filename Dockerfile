@@ -23,7 +23,7 @@ ENV BIOMAJ_RELEASE="shahikorma-v13"
 
 RUN git clone https://github.com/genouest/biomaj-core.git && \
     git clone https://github.com/genouest/biomaj-zipkin.git && \
-    git clone https://github.com/genouest/biomaj-user-shebanger.git && \
+    git clone https://github.com/genouest/biomaj-user.git && \
     git clone https://github.com/genouest/biomaj-cli.git && \
     git clone https://github.com/genouest/biomaj-process.git && \
     git clone https://github.com/genouest/biomaj-download.git && \
@@ -55,7 +55,7 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && apt-get install -y $buildDeps --no-install-recommends \
     && cd /root/biomaj-core && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-user-shebanger && python3 setup.py build && pip3 install --no-cache-dir . \
+    && cd /root/biomaj-user && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-cli && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
     && cd /root/biomaj-process && python3 setup.py build && pip3 install --no-cache-dir . \
