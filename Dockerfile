@@ -29,9 +29,9 @@ RUN git clone https://github.com/rsiminel/biomaj-core.git && \
     git clone https://github.com/rsiminel/biomaj-download.git && \
     git clone https://github.com/rsiminel/biomaj.git && \
     git clone https://github.com/rsiminel/biomaj-daemon.git && \
-    git clone https://github.com/genouest/biomaj-watcher.git && \
+    git clone https://github.com/rsiminel/biomaj-watcher.git && \
     git clone https://github.com/rsiminel/biomaj-ftp.git && \
-    git clone https://github.com/genouest/biomaj-release.git && \
+    git clone https://github.com/rsiminel/biomaj-release.git && \
     git clone https://github.com/genouest/biomaj-data.git
 
 ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
