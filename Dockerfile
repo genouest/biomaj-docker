@@ -26,9 +26,9 @@ RUN git clone https://github.com/genouest/biomaj-core.git && \
     git clone https://github.com/rsiminel/biomaj-user-shebanger.git && \
     git clone https://github.com/genouest/biomaj-cli.git && \
     git clone https://github.com/genouest/biomaj-process.git && \
-    git clone https://github.com/genouest/biomaj-download.git && \
+    git clone https://github.com/rsiminel/biomaj-download.git && \
     git clone https://github.com/genouest/biomaj.git && \
-    git clone https://github.com/genouest/biomaj-daemon.git && \
+    git clone https://github.com/rsiminel/biomaj-daemon.git && \
     git clone https://github.com/genouest/biomaj-watcher.git && \
     git clone https://github.com/genouest/biomaj-ftp.git && \
     git clone https://github.com/genouest/biomaj-release.git && \
