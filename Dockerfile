@@ -39,14 +39,14 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 RUN mkdir -p /var/log/biomaj
 
 RUN pip3 install --no-cache-dir setuptools --upgrade && \
-pip3 install --no-cache-dir greenlet==0.4.17 && \
-pip3 install --no-cache-dir gevent==1.4.0 && \
-pip3 install --no-cache-dir graypy && \
-pip3 install --no-cache-dir pymongo==3.12.3 && \
-pip3 install --no-cache-dir redis==3.5.3 && \
-pip3 install --no-cache-dir wheel && \
-pip3 install --no-cache-dir PyYAML==5.4.1 && \
-python3 -m pip install --no-cache-dir ftputil
+    pip3 install --no-cache-dir greenlet==0.4.17 && \
+    pip3 install --no-cache-dir gevent==1.4.0 && \
+    pip3 install --no-cache-dir graypy && \
+    pip3 install --no-cache-dir pymongo==3.12.3 && \
+    pip3 install --no-cache-dir redis==3.5.3 && \
+    pip3 install --no-cache-dir wheel && \
+    pip3 install --no-cache-dir PyYAML==5.4.1 && \
+    python3 -m pip install --no-cache-dir ftputil
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps="gcc python3-dev protobuf-compiler" \
