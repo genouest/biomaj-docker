@@ -45,7 +45,8 @@ RUN pip3 install --no-cache-dir setuptools --upgrade && \
     pip3 install --no-cache-dir pymongo==3.12.3 && \
     pip3 install --no-cache-dir redis==3.5.3 && \
     pip3 install --no-cache-dir wheel && \
-    pip3 install --no-cache-dir PyYAML==5.3.1
+    pip3 install --no-cache-dir PyYAML==5.4.1 && \
+    python3 -m pip install --no-cache-dir ftputil
 
 ENV SUDO_FORCE_REMOVE=yes
 RUN buildDeps="gcc python3-dev protobuf-compiler" \
@@ -66,7 +67,7 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && cd /root/biomaj-ftp && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-release && python3 setup.py build && pip3 install --no-cache-dir . \
     && cd /root/biomaj-data && python3 setup.py build && pip3 install --no-cache-dir . \
-    && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git \
+    && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git nano python3-markupsafe python3-bcrypt python3-yapsy\
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

@@ -1,6 +1,5 @@
 .env
 biomaj
-!*biomaj/
 mongo
 redis
 rabbitmq
