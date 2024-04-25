@@ -38,7 +38,8 @@ ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
-RUN pip3 install --no-cache-dir setuptools --upgrade && \
+RUN pip3 install --no-cache-dir pip --upgrade && \
+    pip3 install --no-cache-dir setuptools --upgrade && \
     pip3 install --no-cache-dir greenlet==0.4.17 && \
     pip3 install --no-cache-dir gevent==1.4.0 && \
     pip3 install --no-cache-dir graypy && \
