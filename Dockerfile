@@ -47,6 +47,7 @@ RUN pip3 install --no-cache-dir pip --upgrade && \
     pip3 install --no-cache-dir redis==3.5.3 && \
     pip3 install --no-cache-dir wheel && \
     pip3 install --no-cache-dir PyYAML==5.4.1 && \
+    pip3 install --no-cache-dir protobuf==3.20.3 && \
     python3 -m pip install --no-cache-dir ftputil
 
 ENV SUDO_FORCE_REMOVE=yes
