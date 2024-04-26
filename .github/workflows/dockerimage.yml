@@ -36,6 +36,7 @@ jobs:
     - name: Execute test script
       run: |
         sleep 60
+        docker compose logs
         ./docker-test.sh local
     - name: Shut down Docker containers
       run: |
