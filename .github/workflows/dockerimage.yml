@@ -35,8 +35,7 @@ jobs:
         docker compose up -d
     - name: Execute test script
       run: |
-        sleep 60
-        docker compose logs
+        sleep 20
         ./docker-test.sh local
     - name: Shut down Docker containers
       run: |
