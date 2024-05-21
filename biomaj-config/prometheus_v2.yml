@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 15s  # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s  # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these extra labels to all timeseries collected by this Prometheus
+  # instance.
+  external_labels:
+    monitor: 'biomaj'
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped
+  # from this config.
+  - job_name: 'biomaj'
+    consul_sd_configs:
+        - server: 'biomaj-consul:8500'
+          services:
+            - biomaj-daemon
+            - biomaj-process
+            - biomaj-download

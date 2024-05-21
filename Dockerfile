@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:buster
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
