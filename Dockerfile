@@ -55,20 +55,20 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && set -x \
     && apt-get update \
     && apt-get install -y $buildDeps --no-install-recommends \
-    && pip install git+https://github.com/genouest/biomaj-core.git \
-    && pip install git+https://github.com/genouest/biomaj-zipkin.git \
-    && pip install git+https://github.com/genouest/biomaj-user.git \
-    && pip install git+https://github.com/genouest/biomaj-cli.git \
+    && pip install git+https://github.com/genouest/biomaj-core.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-zipkin.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-user.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-cli.git --no-cache-dir \
     # && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
-    && pip install git+https://github.com/genouest/biomaj-process.git \
+    && pip install git+https://github.com/genouest/biomaj-process.git --no-cache-dir \
     # && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
-    && pip install git+https://github.com/genouest/biomaj-download.git \
-    && pip install git+https://github.com/genouest/biomaj.git \
-    && pip install git+https://github.com/genouest/biomaj-daemon.git \
-    && pip install git+https://github.com/genouest/biomaj-watcher.git \
-    && pip install git+https://github.com/genouest/biomaj-ftp.git \
-    && pip install git+https://github.com/genouest/biomaj-release.git \
-    && pip install git+https://github.com/genouest/biomaj-data.git \
+    && pip install git+https://github.com/genouest/biomaj-download.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-daemon.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-watcher.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-ftp.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-release.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-data.git --no-cache-dir \
     && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git nano python3-markupsafe python3-bcrypt python3-yapsy\
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
