@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
@@ -41,7 +41,7 @@ RUN mkdir -p /var/log/biomaj
 RUN pip3 install --no-cache-dir pip --upgrade && \
     pip3 install --no-cache-dir setuptools --upgrade && \
     pip3 install --no-cache-dir greenlet==0.4.17 && \
-    pip3 install --no-cache-dir gevent==1.4.0 && \
+    # pip3 install --no-cache-dir gevent==1.4.0 && \
     pip3 install --no-cache-dir graypy && \
     pip3 install --no-cache-dir pymongo==3.12.3 && \
     pip3 install --no-cache-dir redis==3.5.3 && \
@@ -75,9 +75,9 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN pip3 uninstall -y gunicorn && pip3 install --no-cache-dir gunicorn==19.9.0 && \
-    pip3 uninstall -y greenlet && pip3 install --no-cache-dir greenlet==0.4.15 && \
-    pip3 uninstall -y gevent && pip3 install --no-cache-dir gevent==1.3.7
+RUN pip3 uninstall -y gunicorn && pip3 install --no-cache-dir gunicorn==19.9.0
+# RUN pip3 uninstall -y greenlet && pip3 install --no-cache-dir greenlet==0.4.15 && \
+#     pip3 uninstall -y gevent && pip3 install --no-cache-dir gevent==1.3.7
 
 
 
