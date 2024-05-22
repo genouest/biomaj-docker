@@ -55,20 +55,20 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && set -x \
     && apt-get update \
     && apt-get install -y $buildDeps --no-install-recommends \
-    && cd /root/biomaj-core && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-user && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-cli && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
-    && cd /root/biomaj-process && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
-    && cd /root/biomaj-download && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-daemon && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-watcher && pip3 install --no-cache-dir -r requirements.txt && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-ftp && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-release && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-data && python3 setup.py build && pip3 install --no-cache-dir . \
+    && pip install git+https://github.com/genouest/biomaj-core.git \
+    && pip install git+https://github.com/genouest/biomaj-zipkin.git \
+    && pip install git+https://github.com/genouest/biomaj-user.git \
+    && pip install git+https://github.com/genouest/biomaj-cli.git \
+    # && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
+    && pip install git+https://github.com/genouest/biomaj-process.git \
+    # && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
+    && pip install git+https://github.com/genouest/biomaj-download.git \
+    && pip install git+https://github.com/genouest/biomaj.git \
+    && pip install git+https://github.com/genouest/biomaj-daemon.git \
+    && pip install git+https://github.com/genouest/biomaj-watcher.git \
+    && pip install git+https://github.com/genouest/biomaj-ftp.git \
+    && pip install git+https://github.com/genouest/biomaj-release.git \
+    && pip install git+https://github.com/genouest/biomaj-data.git \
     && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git nano python3-markupsafe python3-bcrypt python3-yapsy\
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
