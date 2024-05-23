@@ -21,6 +21,19 @@ RUN buildDeps='gnupg2 dirmngr' \
 
 ENV BIOMAJ_RELEASE="shahikorma-v13"
 
+RUN git clone https://github.com/genouest/biomaj-core.git && \
+    git clone https://github.com/genouest/biomaj-zipkin.git && \
+    git clone https://github.com/genouest/biomaj-user.git && \
+    git clone https://github.com/genouest/biomaj-cli.git && \
+    git clone https://github.com/genouest/biomaj-process.git && \
+    git clone https://github.com/genouest/biomaj-download.git && \
+    git clone https://github.com/genouest/biomaj.git && \
+    git clone https://github.com/genouest/biomaj-daemon.git && \
+    git clone https://github.com/genouest/biomaj-watcher.git && \
+    git clone https://github.com/genouest/biomaj-ftp.git && \
+    git clone https://github.com/genouest/biomaj-release.git && \
+    git clone https://github.com/genouest/biomaj-data.git
+
 ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
