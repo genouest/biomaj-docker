@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
@@ -21,18 +21,8 @@ RUN buildDeps='gnupg2 dirmngr' \
 
 ENV BIOMAJ_RELEASE="shahikorma-v13"
 
-RUN git clone https://github.com/genouest/biomaj-core.git && \
-    git clone https://github.com/genouest/biomaj-zipkin.git && \
-    git clone https://github.com/genouest/biomaj-user.git && \
-    git clone https://github.com/genouest/biomaj-cli.git && \
-    git clone https://github.com/genouest/biomaj-process.git && \
-    git clone https://github.com/genouest/biomaj-download.git && \
-    git clone https://github.com/genouest/biomaj.git && \
-    git clone https://github.com/genouest/biomaj-daemon.git && \
-    git clone https://github.com/genouest/biomaj-watcher.git && \
-    git clone https://github.com/genouest/biomaj-ftp.git && \
-    git clone https://github.com/genouest/biomaj-release.git && \
-    git clone https://github.com/genouest/biomaj-data.git
+RUN git clone https://github.com/genouest/biomaj-process.git && \
+    git clone https://github.com/genouest/biomaj-download.git
 
 ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
@@ -41,7 +31,6 @@ RUN mkdir -p /var/log/biomaj
 RUN pip3 install --no-cache-dir pip --upgrade && \
     pip3 install --no-cache-dir setuptools --upgrade && \
     pip3 install --no-cache-dir greenlet==0.4.17 && \
-    pip3 install --no-cache-dir gevent==1.4.0 && \
     pip3 install --no-cache-dir graypy && \
     pip3 install --no-cache-dir pymongo==3.12.3 && \
     pip3 install --no-cache-dir redis==3.5.3 && \
@@ -55,30 +44,27 @@ RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && set -x \
     && apt-get update \
     && apt-get install -y $buildDeps --no-install-recommends \
-    && cd /root/biomaj-core && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-user && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-cli && python3 setup.py build && pip3 install --no-cache-dir . \
+    && pip install git+https://github.com/genouest/biomaj-core.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-zipkin.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-user.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-cli.git --no-cache-dir \
     && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
-    && cd /root/biomaj-process && python3 setup.py build && pip3 install --no-cache-dir . \
+    && pip install git+https://github.com/genouest/biomaj-process.git --no-cache-dir \
     && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
-    && cd /root/biomaj-download && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-daemon && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-watcher && pip3 install --no-cache-dir -r requirements.txt && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-ftp && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-release && python3 setup.py build && pip3 install --no-cache-dir . \
-    && cd /root/biomaj-data && python3 setup.py build && pip3 install --no-cache-dir . \
+    && pip install git+https://github.com/genouest/biomaj-download.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-daemon.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-watcher.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-ftp.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-release.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-data.git --no-cache-dir \
     && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git nano python3-markupsafe python3-bcrypt python3-yapsy\
     && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN pip3 uninstall -y gunicorn && pip3 install --no-cache-dir gunicorn==19.9.0 && \
-    pip3 uninstall -y greenlet && pip3 install --no-cache-dir greenlet==0.4.15 && \
-    pip3 uninstall -y gevent && pip3 install --no-cache-dir gevent==1.3.7
-
+RUN pip3 uninstall -y gunicorn && pip3 install --no-cache-dir gunicorn==19.9.0
 
 
 #Conda installation and give write permissions to conda folder
@@ -89,8 +75,6 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     /opt/conda/bin/conda config --add channels bioconda && \
     /opt/conda/bin/conda upgrade -y conda && \
     chmod 777 -R /opt/conda/
-
-
 
 
 RUN mkdir /data /config
