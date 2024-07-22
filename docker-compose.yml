@@ -173,7 +173,7 @@
             - biomaj-rabbitmq
             - biomaj-redis
             - biomaj-elasticsearch
-        command: ["/startup.sh", "python3", "/root/biomaj-process/bin/biomaj_process_consumer.py"]
+        command: ["/startup.sh", "biomaj_process_consumer.py"]
 
     biomaj-daemon-web:
         image: quay.io/genouest/biomaj
@@ -222,7 +222,7 @@
             - biomaj-user-web
             - biomaj-download-web
             - biomaj-process-web
-        command: ["/startup.sh", "python3", "/root/biomaj-daemon/bin/biomaj_daemon_consumer.py"]
+        command: ["/startup.sh", "biomaj_daemon_consumer.py"]
 
     biomaj-watcher-web:
         image: quay.io/genouest/biomaj
@@ -271,7 +271,7 @@
             - biomaj-elasticsearch
         ports:
             - "2121:21"
-        command: ["/startup.sh", "python3", "/root/biomaj-ftp/bin/biomaj_ftp_service.py"]
+        command: ["/startup.sh", "biomaj_ftp_service.py"]
 
     biomaj-release-web:
         image: quay.io/genouest/biomaj
@@ -289,7 +289,7 @@
             - biomaj-redis
             - biomaj-daemon-web
             - biomaj-daemon-message
-        command: ["/startup.sh", "python3", "/root/biomaj-release/bin/biomaj_release.py"]
+        command: ["/startup.sh", "biomaj_release.py"]
 
     biomaj-expose:
         image: quay.io/genouest/biomaj-expose
