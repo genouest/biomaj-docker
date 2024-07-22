@@ -132,7 +132,7 @@
             - biomaj-consul
             - biomaj-rabbitmq
             - biomaj-redis
-        command: ["/startup.sh", "python3", "/root/biomaj-download/bin/biomaj_download_consumer.py"]
+        command: ["/startup.sh", "biomaj_download_consumer.py"]
 
     biomaj-process-web:
         image: quay.io/genouest/biomaj
