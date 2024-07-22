@@ -37,7 +37,7 @@
         command: agent -dev -client 0.0.0.0 -log-level info
 
     biomaj-prometheus:
-        image: prom/prometheus:v1.8.2
+        image: prom/prometheus:v2.45.6
         ports:
             - "9090:9090"
         volumes:
@@ -45,8 +45,8 @@
         depends_on:
             - biomaj-consul
         command:
-            - '-storage.local.retention=720h'
-            - '-config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.retention.time=720h'
+            - '--config.file=/etc/prometheus/prometheus.yml'
 
     biomaj-influxdb:
         image: influxdb
