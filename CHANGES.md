@@ -4,7 +4,7 @@ Notes: requires mongo 3.x
 
 ## v14 - TBR
 
-/!\ Breaking: Upgrading promoetheus version from 2.45.6. Data will be lost in the upgrade.
+/!\ Breaking: Upgrading prometheus version from 2.45.6. Data will be lost in the upgrade.
 * Various fixes and cleanup
 
 ## v13 - 2022-04-28
