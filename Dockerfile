@@ -1,118 +1,85 @@
-FROM quay.io/osallou/debian:buster
+FROM debian:bullseye
 
 WORKDIR /root
 ENV BIOMAJ_CONFIG=/root/config.yml
 ENV prometheus_multiproc_dir=/tmp/biomaj-prometheus-multiproc
 
-RUN rm -rf /tmp/biomaj-prometheus-multiproc
-RUN mkdir -p /tmp/biomaj-prometheus-multiproc
-
-RUN apt-get update && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq --no-install-recommends
+RUN rm -rf /tmp/biomaj-prometheus-multiproc && \
+    mkdir -p /tmp/biomaj-prometheus-multiproc
 
 # Install docker to allow docker execution from process-message
-RUN buildDeps='gnupg2 dirmngr software-properties-common' \
-    && set -x \
-    && apt-get install -y $buildDeps --no-install-recommends \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
-    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+RUN buildDeps='gnupg2 dirmngr' \
     && apt-get update \
-    && apt-get install -y docker-ce-cli \
-    && apt-get purge -y --auto-remove $buildDeps
+    && apt-get install -y apt-transport-https curl libcurl4-openssl-dev python3-pycurl python3-setuptools python3-pip git unzip bzip2 ca-certificates jq $buildDeps --no-install-recommends \
+    && echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' | tee /etc/apt/sources.list.d/docker.list \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y docker-ce-cli \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-ENV BIOMAJ_RELEASE="shahikorma-v13"
+ENV BIOMAJ_RELEASE="14"
 
-RUN git clone https://github.com/genouest/biomaj-core.git
-#RUN easy_install3 pip
-RUN pip3 install setuptools --upgrade
-
-RUN git clone https://github.com/genouest/biomaj-zipkin.git
-
-RUN git clone https://github.com/genouest/biomaj-user.git
-
-RUN git clone https://github.com/genouest/biomaj-cli.git
-
-RUN git clone https://github.com/genouest/biomaj-process.git
-
-RUN git clone https://github.com/genouest/biomaj-download.git
-
-RUN git clone  https://github.com/genouest/biomaj.git && echo "Install biomaj"
-
-RUN git clone https://github.com/genouest/biomaj-daemon.git && echo "Install daemon"
-
-RUN git clone https://github.com/genouest/biomaj-watcher.git && echo "Install biomaj-watcher"
-
-RUN git clone https://github.com/genouest/biomaj-ftp.git
-
-RUN git clone https://github.com/genouest/biomaj-release.git
-
-RUN git clone https://github.com/genouest/biomaj-data.git
+RUN git clone https://github.com/genouest/biomaj-process.git && \
+    git clone https://github.com/genouest/biomaj-download.git
 
 ENV BIOMAJ_CONFIG=/etc/biomaj/config.yml
 
 RUN mkdir -p /var/log/biomaj
 
-RUN pip3 install greenlet==0.4.17
-RUN pip3 install gevent==1.4.0
-RUN pip3 install graypy
-RUN pip3 install pymongo==3.12.3
-RUN pip3 install redis==3.5.3
-RUN pip3 install wheel
-RUN pip3 install PyYAML==5.3.1
+RUN pip3 install --no-cache-dir pip --upgrade && \
+    pip3 install --no-cache-dir setuptools --upgrade && \
+    pip3 install --no-cache-dir greenlet==0.4.17 && \
+    pip3 install --no-cache-dir graypy && \
+    pip3 install --no-cache-dir pymongo==3.12.3 && \
+    pip3 install --no-cache-dir redis==3.5.3 && \
+    pip3 install --no-cache-dir wheel && \
+    pip3 install --no-cache-dir PyYAML==5.4.1 && \
+    pip3 install --no-cache-dir protobuf==3.20.3 && \
+    python3 -m pip install --no-cache-dir ftputil
 
 ENV SUDO_FORCE_REMOVE=yes
-RUN buildDeps='gcc python3-dev protobuf-compiler' \
+RUN buildDeps="gcc python3-dev protobuf-compiler" \
     && set -x \
+    && apt-get update \
     && apt-get install -y $buildDeps --no-install-recommends \
-    && cd /root/biomaj-core && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-zipkin && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-user && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-cli && python3 setup.py build && pip3 install . \
+    && pip install git+https://github.com/genouest/biomaj-core.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-zipkin.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-user.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-cli.git --no-cache-dir \
     && cd /root/biomaj-process/biomaj_process/message && protoc --python_out=. procmessage.proto \
-    && cd /root/biomaj-process && python3 setup.py build && pip3 install . \
+    && pip install git+https://github.com/genouest/biomaj-process.git --no-cache-dir \
     && cd /root/biomaj-download/biomaj_download/message && protoc --python_out=. downmessage.proto \
-    && cd /root/biomaj-download && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-daemon && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-watcher && pip3 install -r requirements.txt && pip3 install . \
-    && cd /root/biomaj-ftp && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-release && python3 setup.py build && pip3 install . \
-    && cd /root/biomaj-data && python3 setup.py build && pip3 install . \
-    && apt-get install -y wget bzip2 ca-certificates curl git \
+    && pip install git+https://github.com/genouest/biomaj-download.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-daemon.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-watcher.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-ftp.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-release.git --no-cache-dir \
+    && pip install git+https://github.com/genouest/biomaj-data.git --no-cache-dir \
+    && apt-get install --no-install-recommends -y wget bzip2 ca-certificates curl git nano python3-markupsafe python3-bcrypt python3-yapsy\
+    && apt-get purge -y --auto-remove $buildDeps \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get purge -y --auto-remove $buildDeps
+    && rm -rf /var/lib/apt/lists/*
 
 
-
-#RUN apt-get update --fix-missing && \
-#    apt-get install -y wget bzip2 ca-certificates curl git && \
-#    apt-get clean && \
-#    rm -rf /var/lib/apt/lists/*
-RUN pip3 uninstall -y gunicorn && pip3 install gunicorn==19.9.0
-RUN pip3 uninstall -y greenlet && pip3 install greenlet==0.4.15
-RUN pip3 uninstall -y gevent && pip3 install gevent==1.3.7
-
+RUN pip3 uninstall -y gunicorn && pip3 install --no-cache-dir gunicorn==19.9.0
 
 
 #Conda installation and give write permissions to conda folder
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh &&  \
-    /opt/conda/bin/conda config --add channels r  && \
-    /opt/conda/bin/conda config --add channels bioconda  && \
-    /opt/conda/bin/conda upgrade -y conda  && \
+    rm ~/miniconda.sh && \
+    /opt/conda/bin/conda config --add channels r && \
+    /opt/conda/bin/conda config --add channels bioconda && \
+    /opt/conda/bin/conda upgrade -y conda && \
     chmod 777 -R /opt/conda/
-    
-
 
 
 RUN mkdir /data /config
 
 ENV PATH=$PATH:/opt/conda/bin
-
-#RUN conda config --add channels r
-#RUN conda config --add channels bioconda
-#RUN conda upgrade -y conda
 
 VOLUME ["/data", "/config"]
 
@@ -125,11 +92,11 @@ COPY biomaj-config/gunicorn_conf.py /etc/biomaj/gunicorn_conf.py
 COPY watcher.sh /root/watcher.sh
 
 # Local test configuration
-RUN mkdir -p /etc/biomaj/conf.d
-RUN mkdir -p /var/log/biomaj
-RUN mkdir -p /etc/biomaj/process.d
-RUN mkdir -p /var/cache/biomaj
-RUN mkdir -p /var/run/biomaj
+RUN mkdir -p /etc/biomaj/conf.d && \
+    mkdir -p /var/log/biomaj && \
+    mkdir -p /etc/biomaj/process.d && \
+    mkdir -p /var/cache/biomaj && \
+    mkdir -p /var/run/biomaj
 COPY test-local/etc/biomaj/global_local.properties /etc/biomaj/global_local.properties
 COPY test-local/etc/biomaj/conf.d/alu.properties /etc/biomaj/conf.d/alu.properties
 

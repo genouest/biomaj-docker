@@ -2,7 +2,10 @@
 
 Notes: requires mongo 3.x
 
-## shahikorma
+## v14 - TBR
+
+/!\ Breaking: Upgrading prometheus version from 2.45.6. Data will be lost in the upgrade.
+* Various fixes and cleanup
 
 ## v13 - 2022-04-28
 
@@ -84,4 +87,3 @@ Notes: requires mongo 3.x
 
 * Add naming in versions
 * Force pika library version 0.11.2 in biomaj-download and biomaj-process (latest not working)
-

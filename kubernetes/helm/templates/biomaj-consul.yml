@@ -8,6 +8,6 @@ spec:
   hostname: consulnode1
   containers:
   - name: biomaj-consul
-    image: consul
+    image: hashicorp/consul:1.17
     command: ["consul"]
     args: ["agent", "-dev", "-client", "0.0.0.0", "-log-level", "info"]
