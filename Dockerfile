@@ -19,7 +19,7 @@ RUN buildDeps='gnupg2 dirmngr' \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-ENV BIOMAJ_RELEASE="shahikorma-v13"
+ENV BIOMAJ_RELEASE="14"
 
 RUN git clone https://github.com/genouest/biomaj-process.git && \
     git clone https://github.com/genouest/biomaj-download.git
