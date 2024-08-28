@@ -239,7 +239,7 @@
             - biomaj-user-web
             - biomaj-daemon-web
             - biomaj-elasticsearch
-        command: ["/startup.sh", "/root/watcher.sh"]
+        command: ["/startup.sh", "gunicorn", "-c", "/etc/biomaj/gunicorn_conf.py", "-b", "0.0.0.0:5000", "--log-config", "/etc/biomaj/production.ini --paste /etc/biomaj/production.ini biomajwatcher.biomajwatcher:main"]
 
     biomaj-cron:
         image: quay.io/genouest/biomaj-cron
