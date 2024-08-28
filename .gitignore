@@ -4,3 +4,4 @@ mongo
 redis
 rabbitmq
 influxdb
+biomaj-config
